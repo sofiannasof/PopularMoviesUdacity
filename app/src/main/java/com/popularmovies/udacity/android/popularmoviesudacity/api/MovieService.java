@@ -2,8 +2,8 @@ package com.popularmovies.udacity.android.popularmoviesudacity.api;
 
 import com.popularmovies.udacity.android.popularmoviesudacity.Movie;
 
-import retrofit.http.GET;
-import retrofit.http.Query;
+import retrofit2.http.GET;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**

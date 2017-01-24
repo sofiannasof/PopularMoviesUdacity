@@ -7,8 +7,8 @@ import com.popularmovies.udacity.android.popularmoviesudacity.api.MovieService;
 
 import javax.inject.Inject;
 
-import retrofit.RestAdapter;
-import retrofit.http.Query;
+import retrofit2.Retrofit;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -18,7 +18,7 @@ import rx.Observable;
 public class AppRemoteDataStore implements MovieService {
 
     @Inject
-    RestAdapter retrofit;
+    Retrofit retrofit;
 
     public AppRemoteDataStore() {
         MovieApplication.getAppComponent().inject(this);
