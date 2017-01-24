@@ -5,11 +5,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.ImageView;
 
 import com.popularmovies.udacity.android.popularmoviesudacity.LoadListener;
 import com.popularmovies.udacity.android.popularmoviesudacity.Movie;
 import com.popularmovies.udacity.android.popularmoviesudacity.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,9 +64,10 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ItemViewHolder
             }
         } else {
             final Movie.Results movie = mMovies.get(i);
-            itemViewHolder.login.setText(movie.getOriginal_title());
+/*            itemViewHolder.login.setText(movie.getOriginal_title());
             itemViewHolder.repos.setText("rating: " + movie.getVote_average());
-            itemViewHolder.blog.setText("date: " + movie.getRelease_date());
+            itemViewHolder.blog.setText("date: " + movie.getRelease_date());*/
+            Picasso.with(mContext).load(movie.getPoster_path()).into(itemViewHolder.imageView);
         }
     }
 
@@ -84,15 +86,17 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ItemViewHolder
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
-        public TextView login;
-        public TextView repos;
-        public TextView blog;
+        /*        public TextView login;
+                public TextView repos;
+                public TextView blog;*/
+        ImageView imageView;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            login = (TextView) itemView.findViewById(R.id.login);
+/*            login = (TextView) itemView.findViewById(R.id.login);
             repos = (TextView) itemView.findViewById(R.id.repos);
-            blog = (TextView) itemView.findViewById(R.id.blog);
+            blog = (TextView) itemView.findViewById(R.id.blog);*/
+            imageView = (ImageView) itemView.findViewById(R.id.movie_image_view);
         }
     }
 }
