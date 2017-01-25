@@ -1,6 +1,6 @@
 package com.popularmovies.udacity.android.popularmoviesudacity.api;
 
-import com.popularmovies.udacity.android.popularmoviesudacity.Movie;
+import com.popularmovies.udacity.android.popularmoviesudacity.model.Movie;
 
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -12,13 +12,10 @@ import rx.Observable;
 
 public interface MovieService {
 
-    @GET("/3/movie/popular")
+    @GET("movie/popular")
+//TODO: remove page if not necessary
     Observable<Movie> getMoviesPopular(@Query("api_key") String apiKey, @Query("page") int page);
 
-/*    @GET("movie/popular")
-    Observable<Movie> getPopularMovies(@Query("api_key") String apiKey);
-
     @GET("movie/top_rated")
-    Observable<Movie> getTopRatedMovies(@Query("api_key") String apiKey);*/
-
+    Observable<Movie> getMoviesTopRated(@Query("api_key") String apiKey);
 }

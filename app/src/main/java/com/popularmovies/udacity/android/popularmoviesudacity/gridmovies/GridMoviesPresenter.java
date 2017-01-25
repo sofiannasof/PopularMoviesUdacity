@@ -1,8 +1,11 @@
-package com.popularmovies.udacity.android.popularmoviesudacity;
+package com.popularmovies.udacity.android.popularmoviesudacity.gridMovies;
 
 import android.util.Log;
 
+import com.popularmovies.udacity.android.popularmoviesudacity.BuildConfig;
+import com.popularmovies.udacity.android.popularmoviesudacity.MoviesContract;
 import com.popularmovies.udacity.android.popularmoviesudacity.data.AppRemoteDataStore;
+import com.popularmovies.udacity.android.popularmoviesudacity.model.Movie;
 
 import rx.Observer;
 import rx.Subscription;
@@ -13,23 +16,25 @@ import rx.schedulers.Schedulers;
  * Created by smenesid on 23-Jan-17.
  */
 
-public class ListMoviePresenter implements MovieContract.Presenter {
+public class GridMoviesPresenter implements MoviesContract.Presenter {
+    private static final String LOG_TAG = GridMoviesPresenter.class.getName();
     private Subscription subscription;
     private AppRemoteDataStore appRemoteDataStore;
-    private MovieContract.View view;
+    private MoviesContract.View view;
 
-    public ListMoviePresenter(AppRemoteDataStore appRemoteDataStore, MovieContract.View view) {
+    public GridMoviesPresenter(AppRemoteDataStore appRemoteDataStore, MoviesContract.View view) {
         this.appRemoteDataStore = appRemoteDataStore;
         this.view = view;
         view.setPresenter(this);
     }
 
     @Override
-    public void loadMovieDetails(int page) {
+    public void loadMovies(int page) {
         if (appRemoteDataStore == null) {
             appRemoteDataStore = new AppRemoteDataStore();
         }
 
+        //TOOD: if else based on setting getMoviesTopRated
         subscription = appRemoteDataStore.getMoviesPopular(BuildConfig.THE_MOVIE_DB_API_KEY, page)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -49,14 +54,14 @@ public class ListMoviePresenter implements MovieContract.Presenter {
                     @Override
                     public void onNext(Movie movie) {
                         Log.d("movie", "transfer success" + " page = " + page);
-                        view.showMovieDetails(movie);
+                        view.showMovie(movie);
                     }
                 });
     }
 
     @Override
     public void subscribe(int page) {
-        loadMovieDetails(page);
+        loadMovies(page);
     }
 
     @Override

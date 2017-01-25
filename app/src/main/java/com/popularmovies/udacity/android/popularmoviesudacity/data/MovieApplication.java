@@ -13,7 +13,7 @@ import com.popularmovies.udacity.android.popularmoviesudacity.di.DataModule;
 
 public class MovieApplication extends Application {
 
-    public static final String BASE_URL = "http://api.themoviedb.org";
+    public static final String BASE_URL = "http://api.themoviedb.org/3/";
     private static AppComponent mAppComponent;
 
     public static AppComponent getAppComponent() {

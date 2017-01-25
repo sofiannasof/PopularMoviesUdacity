@@ -1,4 +1,4 @@
-package com.popularmovies.udacity.android.popularmoviesudacity;
+package com.popularmovies.udacity.android.popularmoviesudacity.gridMovies;
 
 /**
  * Created by smenesid on 23-Jan-17.
