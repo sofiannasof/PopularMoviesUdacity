@@ -1,7 +1,10 @@
 package com.popularmovies.udacity.android.popularmoviesudacity.movieDetails;
 
+import android.util.Log;
+
 import com.popularmovies.udacity.android.popularmoviesudacity.MovieDetailsContract;
 import com.popularmovies.udacity.android.popularmoviesudacity.data.AppRemoteDataStore;
+import com.popularmovies.udacity.android.popularmoviesudacity.model.Movie;
 
 import rx.Subscription;
 
@@ -14,24 +17,27 @@ public class MovieDetailsPresenter implements MovieDetailsContract.Presenter {
     private AppRemoteDataStore appRemoteDataStore;
     private MovieDetailsContract.View view;
 
-    public MovieDetailsPresenter(AppRemoteDataStore appRemoteDataStore, MovieDetailsContract.View view) {
+    public MovieDetailsPresenter(AppRemoteDataStore appRemoteDataStore,
+                                 MovieDetailsContract.View view) {
         this.appRemoteDataStore = appRemoteDataStore;
         this.view = view;
         view.setPresenter(this);
     }
 
     @Override
-    public void loadMovie(int page) {
-        //TODO
+    public void loadMovie(Movie.Results movie) {
+        view.showMovie(movie);
     }
 
     @Override
     public void subscribe(int page) {
-        loadMovie(page);
+
     }
 
     @Override
     public void unsubscribe() {
+        Log.e("HERE3", "1");
+
         if (subscription != null && subscription.isUnsubscribed())
             subscription.unsubscribe();
     }

@@ -11,7 +11,7 @@ import com.popularmovies.udacity.android.popularmoviesudacity.model.Movie;
 public class MovieDetailsContract {
 
     public interface View extends BaseView<MovieDetailsContract.Presenter> {
-        void showMovie(Movie movie);
+        void showMovie(Movie.Results movie);
 
         void showError(String message);
 
@@ -19,6 +19,6 @@ public class MovieDetailsContract {
     }
 
     public interface Presenter extends BasePresenter {
-        void loadMovie(int page);
+        void loadMovie(Movie.Results movie);
     }
 }

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.google.gson.Gson;
 import com.popularmovies.udacity.android.popularmoviesudacity.R;
 import com.popularmovies.udacity.android.popularmoviesudacity.gridMovies.LoadListener;
 import com.popularmovies.udacity.android.popularmoviesudacity.model.Movie;
@@ -21,7 +22,7 @@ import java.util.List;
  * Created by smenesid on 23-Jan-17.
  */
 
-public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ItemViewHolder> {
+public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ItemViewHolder> {
 
     List<Movie.Results> mMovies;
     private LoadListener mLoadListener;
@@ -29,7 +30,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ItemViewHolder
     private boolean mLoading;
     private int mLastMoviesCount = 0;
 
-    public HomeAdapter() {
+    public MoviesAdapter() {
         super();
         mMovies = new ArrayList<>();
     }
@@ -57,7 +58,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ItemViewHolder
 
     @Override
     public void onBindViewHolder(ItemViewHolder itemViewHolder, int i) {
-
+        final Movie.Results movie = mMovies.get(i);
         if (canLoadMoreMovies(i)) {
             if (mLoadListener != null) {
                 mLoadListener.onLoadMoreData();
@@ -65,10 +66,10 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ItemViewHolder
                 mLoading = true;
             }
         } else {
-            final Movie.Results movie = mMovies.get(i);
             // TODO: deal with null images
             Picasso.with(mContext).load(movie.getPoster_path()).into(itemViewHolder.imageView);
-            itemViewHolder.itemView.setOnClickListener(v -> startMovieDetailsActivity(1)); //TODO: get id
+            itemViewHolder.itemView.setOnClickListener(v ->
+                    startMovieDetailsActivity(mMovies.get(i)));
         }
     }
 
@@ -86,9 +87,9 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ItemViewHolder
         this.mLoadListener = loadListener;
     }
 
-    public void startMovieDetailsActivity(int movieId) {
+    public void startMovieDetailsActivity(Movie.Results movie) {
         Intent intent = new Intent(mContext, MovieDetailsActivity.class);
-        intent.putExtra("movie_id", movieId);
+        intent.putExtra(Intent.EXTRA_TEXT, new Gson().toJson(movie));
         mContext.startActivity(intent);
     }
 
