@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#03A9F4</color>
+    <color name="colorPrimaryDark">#0288D1</color>
+    <color name="colorAccent">#FF5722</color>
+
+    <!--
+        .dark-primary-color    { background: #0288D1; }
+        .default-primary-color { background: #03A9F4; }
+        .light-primary-color   { background: #B3E5FC; }
+        .text-primary-color    { color: #FFFFFF; }
+        .accent-color          { background: #FF5722; }
+        .primary-text-color    { color: #212121; }
+        .secondary-text-color  { color: #757575; }
+        .divider-color         { border-color: #BDBDBD; }
+    -->
 </resources>
