@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">PopularMoviesUdacity</string>
+    <string name="menu_settings">Settings</string>
     <string name="action_settings">Settings</string>
+    <string name="pref_order">Order by</string>
+    <string name="pref_popular">Popular</string>
+    <string name="pref_top_rated">Top rated</string>
 </resources>

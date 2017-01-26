@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="orderBy">
+        <item name="1">@string/pref_popular</item>
+        <item name="2">@string/pref_top_rated</item>
+    </string-array>
+    <string-array name="orderByValues">
+        <item name="1">popular</item>
+        <item name="2">top_rated</item>
+    </string-array>
+</resources>
