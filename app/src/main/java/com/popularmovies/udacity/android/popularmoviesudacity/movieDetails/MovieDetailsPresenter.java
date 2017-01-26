@@ -1,6 +1,5 @@
 package com.popularmovies.udacity.android.popularmoviesudacity.movieDetails;
 
-import com.popularmovies.udacity.android.popularmoviesudacity.MovieDetailsContract;
 import com.popularmovies.udacity.android.popularmoviesudacity.data.AppRemoteDataStore;
 import com.popularmovies.udacity.android.popularmoviesudacity.model.Movie;
 

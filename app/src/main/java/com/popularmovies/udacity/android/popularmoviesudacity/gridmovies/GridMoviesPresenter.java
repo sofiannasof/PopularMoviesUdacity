@@ -3,7 +3,6 @@ package com.popularmovies.udacity.android.popularmoviesudacity.gridMovies;
 import android.util.Log;
 
 import com.popularmovies.udacity.android.popularmoviesudacity.BuildConfig;
-import com.popularmovies.udacity.android.popularmoviesudacity.MoviesContract;
 import com.popularmovies.udacity.android.popularmoviesudacity.data.AppRemoteDataStore;
 import com.popularmovies.udacity.android.popularmoviesudacity.model.Movie;
 

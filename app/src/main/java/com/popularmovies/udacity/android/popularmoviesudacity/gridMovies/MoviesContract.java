@@ -1,17 +1,17 @@
-package com.popularmovies.udacity.android.popularmoviesudacity;
+package com.popularmovies.udacity.android.popularmoviesudacity.gridMovies;
 
 import com.popularmovies.udacity.android.popularmoviesudacity.base.BasePresenter;
 import com.popularmovies.udacity.android.popularmoviesudacity.base.BaseView;
 import com.popularmovies.udacity.android.popularmoviesudacity.model.Movie;
 
 /**
- * Created by smenesid on 25-Jan-17.
+ * Created by smenesid on 20-Jan-17.
  */
 
-public class MovieDetailsContract {
+public class MoviesContract {
 
-    public interface View extends BaseView<MovieDetailsContract.Presenter> {
-        void showMovie(Movie.Results movie);
+    public interface View extends BaseView<MoviesContract.Presenter> {
+        void showMovie(Movie movie);
 
         void showError(String message);
 
@@ -19,6 +19,6 @@ public class MovieDetailsContract {
     }
 
     public interface Presenter extends BasePresenter {
-        void loadMovie(Movie.Results movie);
+        void loadMovies(int page);
     }
 }

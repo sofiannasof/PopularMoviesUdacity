@@ -10,11 +10,10 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.popularmovies.udacity.android.popularmoviesudacity.MoviesContract;
 import com.popularmovies.udacity.android.popularmoviesudacity.R;
-import com.popularmovies.udacity.android.popularmoviesudacity.adapter.HomeAdapter;
 import com.popularmovies.udacity.android.popularmoviesudacity.data.AppRemoteDataStore;
 import com.popularmovies.udacity.android.popularmoviesudacity.data.MovieApplication;
+import com.popularmovies.udacity.android.popularmoviesudacity.gridMovies.adapter.MoviesAdapter;
 import com.popularmovies.udacity.android.popularmoviesudacity.model.Movie;
 
 import javax.inject.Inject;
@@ -30,7 +29,7 @@ public class GridMoviesActivity extends AppCompatActivity
     AppRemoteDataStore appRemoteDataStore;
     private Movie movie;
     private MoviesContract.Presenter mPresenter;
-    private HomeAdapter mHomeAdapter;
+    private MoviesAdapter mHomeAdapter;
     private int mCurrentMoviePageNumber = 0;
     private ProgressBar mProgressBar;
     private int GRID_COLUMNS = 2;
@@ -46,7 +45,7 @@ public class GridMoviesActivity extends AppCompatActivity
 
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
-        mHomeAdapter = new HomeAdapter();
+        mHomeAdapter = new MoviesAdapter();
 
         //Calling loadMore function in Runnable to fix the
         // java.lang.IllegalStateException: Cannot call this method while RecyclerView is computing a layout or scrolling error

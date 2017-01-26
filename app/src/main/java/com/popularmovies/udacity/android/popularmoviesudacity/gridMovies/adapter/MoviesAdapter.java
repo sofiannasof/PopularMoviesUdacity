@@ -1,4 +1,4 @@
-package com.popularmovies.udacity.android.popularmoviesudacity.adapter;
+package com.popularmovies.udacity.android.popularmoviesudacity.gridMovies.adapter;
 
 import android.content.Context;
 import android.content.Intent;
