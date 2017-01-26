@@ -1,7 +1,5 @@
 package com.popularmovies.udacity.android.popularmoviesudacity.movieDetails;
 
-import android.util.Log;
-
 import com.popularmovies.udacity.android.popularmoviesudacity.MovieDetailsContract;
 import com.popularmovies.udacity.android.popularmoviesudacity.data.AppRemoteDataStore;
 import com.popularmovies.udacity.android.popularmoviesudacity.model.Movie;
@@ -36,7 +34,6 @@ public class MovieDetailsPresenter implements MovieDetailsContract.Presenter {
 
     @Override
     public void unsubscribe() {
-        Log.e("HERE3", "1");
 
         if (subscription != null && subscription.isUnsubscribed())
             subscription.unsubscribe();

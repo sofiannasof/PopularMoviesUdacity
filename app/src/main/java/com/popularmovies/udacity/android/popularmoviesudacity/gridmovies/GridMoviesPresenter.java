@@ -22,7 +22,8 @@ public class GridMoviesPresenter implements MoviesContract.Presenter {
     private AppRemoteDataStore appRemoteDataStore;
     private MoviesContract.View view;
 
-    public GridMoviesPresenter(AppRemoteDataStore appRemoteDataStore, MoviesContract.View view) {
+    public GridMoviesPresenter(AppRemoteDataStore appRemoteDataStore,
+                               MoviesContract.View view) {
         this.appRemoteDataStore = appRemoteDataStore;
         this.view = view;
         view.setPresenter(this);
@@ -34,7 +35,7 @@ public class GridMoviesPresenter implements MoviesContract.Presenter {
             appRemoteDataStore = new AppRemoteDataStore();
         }
 
-        //TOOD: if else based on setting getMoviesTopRated
+        //TODO: if else based on setting getMoviesTopRated
         subscription = appRemoteDataStore.getMoviesPopular(BuildConfig.THE_MOVIE_DB_API_KEY, page)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())

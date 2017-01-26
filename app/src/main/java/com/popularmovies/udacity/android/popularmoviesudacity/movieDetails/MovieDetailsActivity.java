@@ -3,6 +3,7 @@ package com.popularmovies.udacity.android.popularmoviesudacity.movieDetails;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -12,6 +13,7 @@ import com.popularmovies.udacity.android.popularmoviesudacity.R;
 import com.popularmovies.udacity.android.popularmoviesudacity.data.AppRemoteDataStore;
 import com.popularmovies.udacity.android.popularmoviesudacity.data.MovieApplication;
 import com.popularmovies.udacity.android.popularmoviesudacity.model.Movie;
+import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
 
@@ -25,7 +27,11 @@ public class MovieDetailsActivity extends AppCompatActivity
     @Inject
     AppRemoteDataStore appRemoteDataStore;
     Gson gson = new Gson();
-    TextView tvTitle;
+    TextView originalTitle;
+    TextView releaseDate;
+    TextView plot;
+    TextView rating;
+    ImageView thumb;
     private Movie.Results mMovie;
     private MovieDetailsContract.Presenter mPresenter;
 
@@ -42,8 +48,19 @@ public class MovieDetailsActivity extends AppCompatActivity
             String value = extras.getStringExtra(Intent.EXTRA_TEXT);
 
             mMovie = gson.fromJson(value, Movie.Results.class);
-            tvTitle = (TextView) findViewById(R.id.movie_title);
-            tvTitle.setText(mMovie.getOriginal_title());
+            originalTitle = (TextView) findViewById(R.id.original_title);
+            originalTitle.setText(mMovie.getOriginal_title());
+            releaseDate = (TextView) findViewById(R.id.release_date);
+            releaseDate.setText(mMovie.getRelease_date());
+            plot = (TextView) findViewById(R.id.plot);
+            plot.setText(mMovie.getOverview());
+            rating = (TextView) findViewById(R.id.rating);
+            rating.setText(Double.toString(mMovie.getVote_average()).substring(0, 3));
+            thumb = (ImageView) findViewById(R.id.thumb);
+            Picasso.with(getApplicationContext())
+                    .load(mMovie.getPoster_path())
+                    .into(thumb);
+
         }
     }
 
