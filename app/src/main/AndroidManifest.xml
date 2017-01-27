@@ -16,8 +16,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".movieDetails.MovieDetailsActivity"></activity>
-        <activity android:name=".settings.MyPreferences"></activity>
+        <activity
+            android:name=".movieDetails.MovieDetailsActivity"
+            android:parentActivityName=".gridMovies.GridMoviesActivity"></activity>
+        <activity
+            android:name=".settings.MyPreferences"
+            android:parentActivityName=".gridMovies.GridMoviesActivity"></activity>
 
     </application>
 
