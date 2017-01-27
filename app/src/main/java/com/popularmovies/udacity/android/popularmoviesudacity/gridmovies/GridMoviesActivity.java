@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -46,7 +47,7 @@ public class GridMoviesActivity extends AppCompatActivity
     private int GRID_COLUMNS = 2;
     private String mode = "popular";
     private boolean previouslyStarted;
-
+    private SwipeRefreshLayout refreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,20 +57,27 @@ public class GridMoviesActivity extends AppCompatActivity
         new GridMoviesPresenter(appRemoteDataStore, this);
         prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         previouslyStarted = prefs.getBoolean(getString(R.string.prefs_isFirstLaunch), false);
-
-        fetchPage();
+        refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh);
+        refreshLayout.setOnRefreshListener(() -> refresh());
 
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
         mHomeAdapter = new MoviesAdapter();
 
-        //Calling loadMore function in Runnable to fix the
-        // java.lang.IllegalStateException: Cannot call this method while RecyclerView is computing a layout or scrolling error
+        fetchPage();
+
         mHomeAdapter.setOnMovieClickedListener(() -> mRecyclerView.post(() -> fetchPage()));
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, GRID_COLUMNS));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setAdapter(mHomeAdapter);
+    }
+
+    private void refresh() {
+        mCurrentMoviePageNumber = 0;
+        mHomeAdapter.clear();
+        fetchPage();
+        refreshLayout.setRefreshing(false);
     }
 
     private void fetchPage() {

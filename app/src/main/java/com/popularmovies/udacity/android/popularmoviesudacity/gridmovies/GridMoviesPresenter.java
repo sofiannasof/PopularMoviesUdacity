@@ -62,7 +62,7 @@ public class GridMoviesPresenter implements MoviesContract.Presenter {
                     });
         } else if (order.equals("top_rated")) {
 
-            subscription = appRemoteDataStore.getMoviesTopRated(BuildConfig.THE_MOVIE_DB_API_KEY)
+            subscription = appRemoteDataStore.getMoviesTopRated(BuildConfig.THE_MOVIE_DB_API_KEY, page)
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Observer<Movie>() {

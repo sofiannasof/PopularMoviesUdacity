@@ -40,13 +40,14 @@ public class AppRemoteDataStore implements MovieService {
     }
 
     @Override
-    public Observable<Movie> getMoviesTopRated(@Query("api_key") String apiKey) {
+    public Observable<Movie> getMoviesTopRated(@Query("api_key") String apiKey,
+                                               @Query("page") int page) {
         Log.d(LOG_TAG, "Loaded top rated movies");
         Observable<Movie> call = null;
         if (retrofit != null) {
             MovieService apiService = retrofit.create(MovieService.class);
 
-            call = apiService.getMoviesTopRated(apiKey);
+            call = apiService.getMoviesTopRated(apiKey, page);
         }
         return call;
     }
