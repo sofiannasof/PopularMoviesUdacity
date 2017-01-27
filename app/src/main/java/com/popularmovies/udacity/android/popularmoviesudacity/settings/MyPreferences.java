@@ -12,6 +12,9 @@ import com.popularmovies.udacity.android.popularmoviesudacity.R;
  */
 
 public class MyPreferences extends AppCompatActivity {
+
+    private static final String LOG_TAG = MyPreferences.class.getName();
+
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

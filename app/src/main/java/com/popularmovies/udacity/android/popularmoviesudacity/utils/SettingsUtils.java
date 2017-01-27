@@ -9,7 +9,9 @@ import android.preference.PreferenceManager;
  */
 
 public class SettingsUtils {
+
     public static final String PREF_ORDER_BY = "pref_order_by";
+    private static final String LOG_TAG = SettingsUtils.class.getName();
 
     public static void setPreferencesChange(Context context, boolean isPreferencesChanged) {
         PreferenceManager.getDefaultSharedPreferences(context).edit()

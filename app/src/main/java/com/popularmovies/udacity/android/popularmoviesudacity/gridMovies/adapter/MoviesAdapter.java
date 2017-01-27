@@ -24,6 +24,8 @@ import java.util.List;
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ItemViewHolder> {
 
+    private static final String LOG_TAG = MoviesAdapter.class.getName();
+
     List<Movie.Results> mMovies;
     private LoadListener mLoadListener;
     private Context mContext;

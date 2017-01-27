@@ -23,6 +23,8 @@ import javax.inject.Inject;
 public class MovieDetailsActivity extends AppCompatActivity
         implements MovieDetailsContract.View {
 
+    private static final String LOG_TAG = MovieDetailsActivity.class.getName();
+
     @Inject
     AppRemoteDataStore appRemoteDataStore;
     Gson gson = new Gson();

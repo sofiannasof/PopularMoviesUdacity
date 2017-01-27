@@ -14,6 +14,7 @@ import com.popularmovies.udacity.android.popularmoviesudacity.di.DataModule;
 public class MovieApplication extends Application {
 
     public static final String BASE_URL = "http://api.themoviedb.org/3/";
+    private static final String LOG_TAG = MovieApplication.class.getName();
     private static AppComponent mAppComponent;
 
     public static AppComponent getAppComponent() {

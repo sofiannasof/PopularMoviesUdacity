@@ -29,6 +29,8 @@ import javax.inject.Inject;
 public class GridMoviesActivity extends AppCompatActivity
         implements MoviesContract.View, LoadListener {
 
+    private static final String LOG_TAG = GridMoviesActivity.class.getName();
+
     @Inject
     AppRemoteDataStore appRemoteDataStore;
     private Movie movie;

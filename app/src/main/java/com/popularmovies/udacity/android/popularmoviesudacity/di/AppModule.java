@@ -13,6 +13,9 @@ import dagger.Provides;
 
 @Module
 public class AppModule {
+
+    private static final String LOG_TAG = AppModule.class.getName();
+
     Application mApplication;
 
     public AppModule(Application mApplication) {

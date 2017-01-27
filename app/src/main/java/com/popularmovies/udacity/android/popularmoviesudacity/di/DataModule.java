@@ -26,6 +26,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module
 public class DataModule {
+
+    private static final String LOG_TAG = DataModule.class.getName();
+
     String mBaseUrl;
 
     public DataModule(String mBaseUrl) {

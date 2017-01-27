@@ -16,7 +16,9 @@ import rx.schedulers.Schedulers;
  */
 
 public class GridMoviesPresenter implements MoviesContract.Presenter {
+
     private static final String LOG_TAG = GridMoviesPresenter.class.getName();
+
     private Subscription subscription;
     private AppRemoteDataStore appRemoteDataStore;
     private MoviesContract.View view;
@@ -41,19 +43,19 @@ public class GridMoviesPresenter implements MoviesContract.Presenter {
                 .subscribe(new Observer<Movie>() {
                     @Override
                     public final void onCompleted() {
-                        Log.d("movie", "completed" + " page = " + page);
+                        Log.d(LOG_TAG, "completed" + " page = " + page);
                         view.showComplete();
                     }
 
                     @Override
                     public final void onError(Throwable e) {
-                        Log.e("movie", e.getMessage() + " page = " + page);
+                        Log.e(LOG_TAG, e.getMessage() + " page = " + page);
                         view.showError(e.toString());
                     }
 
                     @Override
                     public void onNext(Movie movie) {
-                        Log.d("movie", "transfer success" + " page = " + page);
+                        Log.d(LOG_TAG, "transfer success" + " page = " + page);
                         view.showMovie(movie);
                     }
                 });
