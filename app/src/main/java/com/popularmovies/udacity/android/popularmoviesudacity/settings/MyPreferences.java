@@ -2,8 +2,8 @@ package com.popularmovies.udacity.android.popularmoviesudacity.settings;
 
 import android.os.Bundle;
 import android.preference.Preference;
-import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
+import android.support.v7.app.AppCompatActivity;
 
 import com.popularmovies.udacity.android.popularmoviesudacity.R;
 
@@ -11,7 +11,7 @@ import com.popularmovies.udacity.android.popularmoviesudacity.R;
  * Created by smenesid on 26-Jan-17.
  */
 
-public class MyPreferences extends PreferenceActivity {
+public class MyPreferences extends AppCompatActivity {
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
