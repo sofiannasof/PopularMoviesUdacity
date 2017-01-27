@@ -2,7 +2,9 @@ package com.popularmovies.udacity.android.popularmoviesudacity.gridMovies;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -19,6 +21,7 @@ import com.popularmovies.udacity.android.popularmoviesudacity.data.MovieApplicat
 import com.popularmovies.udacity.android.popularmoviesudacity.gridMovies.adapter.MoviesAdapter;
 import com.popularmovies.udacity.android.popularmoviesudacity.model.Movie;
 import com.popularmovies.udacity.android.popularmoviesudacity.settings.MyPreferences;
+import com.popularmovies.udacity.android.popularmoviesudacity.utils.SettingsUtils;
 
 import javax.inject.Inject;
 
@@ -33,12 +36,17 @@ public class GridMoviesActivity extends AppCompatActivity
 
     @Inject
     AppRemoteDataStore appRemoteDataStore;
+
     private Movie movie;
     private MoviesContract.Presenter mPresenter;
     private MoviesAdapter mHomeAdapter;
     private int mCurrentMoviePageNumber = 0;
     private ProgressBar mProgressBar;
+    private SharedPreferences prefs;
     private int GRID_COLUMNS = 2;
+    private String mode = "popular";
+    private boolean previouslyStarted;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +54,8 @@ public class GridMoviesActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         MovieApplication.getAppComponent().inject(this);
         new GridMoviesPresenter(appRemoteDataStore, this);
+        prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        previouslyStarted = prefs.getBoolean(getString(R.string.prefs_isFirstLaunch), false);
 
         fetchPage();
 
@@ -64,7 +74,21 @@ public class GridMoviesActivity extends AppCompatActivity
 
     private void fetchPage() {
         mCurrentMoviePageNumber++;
-        mPresenter.loadMovies(mCurrentMoviePageNumber);
+
+        if(!previouslyStarted) {
+            SettingsUtils.isFirstRunProcessComplete(getApplicationContext());
+            prefs.edit().putBoolean(getString(R.string.prefs_isFirstLaunch), true).commit();
+            prefs.edit().putString(getString(R.string.pref_order_by),mode).commit();
+        } else {
+            if (prefs.getAll().get(getString(R.string.pref_order_by)).equals("popular")) {
+                mode = "popular";
+            } else if (prefs.getAll().get(getString(R.string.pref_order_by)).equals("top_rated")) {
+                mode = "top_rated";
+            }
+        }
+
+        mPresenter.loadMovies(mCurrentMoviePageNumber, mode);
+
         if (movie != null) {
             mHomeAdapter.addData(movie.getResults());
         }

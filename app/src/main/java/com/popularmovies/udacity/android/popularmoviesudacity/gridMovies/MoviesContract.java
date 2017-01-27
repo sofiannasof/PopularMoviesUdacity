@@ -19,6 +19,6 @@ public class MoviesContract {
     }
 
     public interface Presenter extends BasePresenter {
-        void loadMovies(int page);
+        void loadMovies(int page, String order);
     }
 }

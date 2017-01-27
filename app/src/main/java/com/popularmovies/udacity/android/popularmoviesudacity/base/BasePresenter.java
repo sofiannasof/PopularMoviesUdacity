@@ -5,7 +5,7 @@ package com.popularmovies.udacity.android.popularmoviesudacity.base;
  */
 public interface BasePresenter {
 
-    void subscribe(int page);
+    void subscribe(int page, String order);
 
     void unsubscribe();
 }

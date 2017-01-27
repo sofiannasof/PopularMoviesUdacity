@@ -16,7 +16,6 @@ import dagger.Component;
 @Component(modules = {AppModule.class, DataModule.class})
 public interface AppComponent {
     void inject(GridMoviesActivity activity);
-
     void inject(MovieDetailsActivity activity);
     void inject(AppRemoteDataStore appRemoteDataStore);
 }

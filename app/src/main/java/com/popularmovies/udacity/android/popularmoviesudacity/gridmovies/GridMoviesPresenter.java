@@ -31,39 +31,65 @@ public class GridMoviesPresenter implements MoviesContract.Presenter {
     }
 
     @Override
-    public void loadMovies(int page) {
+    public void loadMovies(int page, String order) {
         if (appRemoteDataStore == null) {
             appRemoteDataStore = new AppRemoteDataStore();
         }
 
-        //TODO: if else based on setting getMoviesTopRated
-        subscription = appRemoteDataStore.getMoviesPopular(BuildConfig.THE_MOVIE_DB_API_KEY, page)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Movie>() {
-                    @Override
-                    public final void onCompleted() {
-                        Log.d(LOG_TAG, "completed" + " page = " + page);
-                        view.showComplete();
-                    }
+        if (order.equals("popular")) {
 
-                    @Override
-                    public final void onError(Throwable e) {
-                        Log.e(LOG_TAG, e.getMessage() + " page = " + page);
-                        view.showError(e.toString());
-                    }
+            subscription = appRemoteDataStore.getMoviesPopular(BuildConfig.THE_MOVIE_DB_API_KEY, page)
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<Movie>() {
+                        @Override
+                        public final void onCompleted() {
+                            Log.d(LOG_TAG, "popular completed" + " page = " + page);
+                            view.showComplete();
+                        }
 
-                    @Override
-                    public void onNext(Movie movie) {
-                        Log.d(LOG_TAG, "transfer success" + " page = " + page);
-                        view.showMovie(movie);
-                    }
-                });
+                        @Override
+                        public final void onError(Throwable e) {
+                            Log.e(LOG_TAG, e.getMessage() + " page = " + page);
+                            view.showError(e.toString());
+                        }
+
+                        @Override
+                        public void onNext(Movie movie) {
+                            Log.d(LOG_TAG, "popular transfer success" + " page = " + page);
+                            view.showMovie(movie);
+                        }
+                    });
+        } else if (order.equals("top_rated")) {
+
+            subscription = appRemoteDataStore.getMoviesTopRated(BuildConfig.THE_MOVIE_DB_API_KEY)
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<Movie>() {
+                        @Override
+                        public final void onCompleted() {
+                            Log.d(LOG_TAG, "top_rated completed" + " page = " + page);
+                            view.showComplete();
+                        }
+
+                        @Override
+                        public final void onError(Throwable e) {
+                            Log.e(LOG_TAG, e.getMessage() + " page = " + page);
+                            view.showError(e.toString());
+                        }
+
+                        @Override
+                        public void onNext(Movie movie) {
+                            Log.d(LOG_TAG, "top_rated transfer success" + " page = " + page);
+                            view.showMovie(movie);
+                        }
+                    });
+        }
     }
 
     @Override
-    public void subscribe(int page) {
-        loadMovies(page);
+    public void subscribe(int page, String order) {
+        loadMovies(page, order);
     }
 
     @Override

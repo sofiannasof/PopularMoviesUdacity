@@ -13,7 +13,7 @@ import rx.Observable;
 public interface MovieService {
 
     @GET("movie/popular")
-//TODO: remove page if not necessary
+        //TODO: remove page if not necessary
     Observable<Movie> getMoviesPopular(@Query("api_key") String apiKey, @Query("page") int page);
 
     @GET("movie/top_rated")

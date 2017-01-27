@@ -4,7 +4,7 @@
         android:defaultValue="popular"
         android:entries="@array/orderBy"
         android:entryValues="@array/orderByValues"
-        android:key="pref_order_by"
+        android:key="@string/pref_order_by"
         android:negativeButtonText="@null"
         android:positiveButtonText="@null"
         android:summary="%s"

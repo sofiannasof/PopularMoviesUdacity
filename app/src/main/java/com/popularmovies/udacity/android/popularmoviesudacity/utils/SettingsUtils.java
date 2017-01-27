@@ -11,6 +11,7 @@ import android.preference.PreferenceManager;
 public class SettingsUtils {
 
     public static final String PREF_ORDER_BY = "pref_order_by";
+    public static final String PREF_FIRST_TIME = "pref_welcome_done";
     private static final String LOG_TAG = SettingsUtils.class.getName();
 
     public static void setPreferencesChange(Context context, boolean isPreferencesChanged) {
@@ -23,6 +24,11 @@ public class SettingsUtils {
                 .getBoolean(PREF_ORDER_BY, true);
     }
 
+    public static boolean isDefaultSortOrder(final Context context) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        return sp.getBoolean(PREF_ORDER_BY, false);
+    }
+
     public static String getDefaultSortOrder(Context context) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         return sp.getString(PREF_ORDER_BY, "popular");
@@ -32,5 +38,15 @@ public class SettingsUtils {
                                                                 SharedPreferences.OnSharedPreferenceChangeListener listener) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         sp.registerOnSharedPreferenceChangeListener(listener);
+    }
+
+    public static boolean isFirstRunProcessComplete(final Context context) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        return sp.getBoolean(PREF_FIRST_TIME, false);
+    }
+
+    public static void markFirstRunProcessesDone(final Context context, boolean newValue) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        sp.edit().putBoolean(PREF_FIRST_TIME, newValue).apply();
     }
 }

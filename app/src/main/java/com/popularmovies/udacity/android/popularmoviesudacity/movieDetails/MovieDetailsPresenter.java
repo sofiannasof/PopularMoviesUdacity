@@ -27,7 +27,7 @@ public class MovieDetailsPresenter implements MovieDetailsContract.Presenter {
     }
 
     @Override
-    public void subscribe(int page) {
+    public void subscribe(int page, String order) {
 
     }
 
