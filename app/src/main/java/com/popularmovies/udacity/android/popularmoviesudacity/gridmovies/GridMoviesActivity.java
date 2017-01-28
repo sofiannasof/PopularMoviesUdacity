@@ -64,9 +64,10 @@ public class GridMoviesActivity extends AppCompatActivity
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
         mHomeAdapter = new MoviesAdapter();
 
+        mHomeAdapter.setOnMovieClickedListener(() -> mRecyclerView.post(() -> fetchPage()));
+        refresh();
         fetchPage();
 
-        mHomeAdapter.setOnMovieClickedListener(() -> mRecyclerView.post(() -> fetchPage()));
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, GRID_COLUMNS));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
