@@ -70,6 +70,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ItemViewHo
         } else {
             Picasso.with(mContext).load(movie.getPoster_path())
                     .placeholder(R.drawable.ic_posterplaceholder)
+                    .error(R.drawable.ic_errorplaceholder)
                     .into(itemViewHolder.imageView);
             itemViewHolder.itemView.setOnClickListener(v ->
                     startMovieDetailsActivity(mMovies.get(i)));

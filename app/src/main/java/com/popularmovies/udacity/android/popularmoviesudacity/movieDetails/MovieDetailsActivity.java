@@ -60,6 +60,8 @@ public class MovieDetailsActivity extends AppCompatActivity
             thumb = (ImageView) findViewById(R.id.thumb);
             Picasso.with(getApplicationContext())
                     .load(mMovie.getPoster_path())
+                    .placeholder(R.drawable.ic_posterplaceholder)
+                    .error(R.drawable.ic_errorplaceholder)
                     .into(thumb);
 
         }
