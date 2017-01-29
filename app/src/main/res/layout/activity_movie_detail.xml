@@ -5,90 +5,103 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/card_movie_title"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="8dp"
-        android:background="@color/cardview_shadow_end_color">
+        android:layout_height="match_parent"
+        tools:ignore="HardcodedText">
 
-        <RelativeLayout
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp">
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/original_title"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:padding="8dp"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="40sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/plot_title"
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_movie_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/original_title"
-                android:padding="8dp"
-                android:text="@string/detail_plot"
-                android:textColor="@color/colorPrimaryDark"
-                android:textStyle="bold" />
+                android:layout_centerHorizontal="true"
+                android:layout_margin="8dp"
+                android:background="@color/cardview_shadow_end_color">
 
-            <TextView
-                android:id="@+id/plot"
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp">
+
+                    <TextView
+                        android:id="@+id/original_title"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:padding="8dp"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="40sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/plot_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/original_title"
+                        android:padding="8dp"
+                        android:text="@string/detail_plot"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/plot"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/plot_title"
+                        android:padding="8dp" />
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_movie_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/plot_title"
-                android:padding="8dp" />
+                android:layout_below="@+id/card_movie_title"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="8dp"
+                android:background="@color/cardview_shadow_end_color">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/thumb"
+                        android:layout_width="160dp"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:padding="8dp"
+                        tools:src="@mipmap/ic_launcher" />
+
+                    <TextView
+                        android:id="@+id/rating"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/thumb"
+                        android:layout_toRightOf="@+id/thumb"
+                        android:padding="8dp"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="33sp" />
+
+                    <TextView
+                        android:id="@+id/release_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@id/thumb"
+                        android:layout_marginBottom="8dp"
+                        android:layout_toEndOf="@+id/thumb"
+                        android:layout_toRightOf="@+id/thumb"
+                        android:padding="8dp" />
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
         </RelativeLayout>
-    </android.support.v7.widget.CardView>
-
-    <android.support.v7.widget.CardView
-        android:id="@+id/card_movie_detail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/card_movie_title"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="8dp"
-        android:background="@color/cardview_shadow_end_color">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/thumb"
-                android:layout_width="160dp"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:padding="8dp"
-                tools:src="@mipmap/ic_launcher" />
-
-            <TextView
-                android:id="@+id/rating"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toEndOf="@+id/thumb"
-                android:layout_toRightOf="@+id/thumb"
-                android:padding="8dp"
-                android:textColor="@color/colorAccent"
-                android:textSize="33sp" />
-
-            <TextView
-                android:id="@+id/release_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/thumb"
-                android:layout_marginBottom="8dp"
-                android:layout_toEndOf="@+id/thumb"
-                android:layout_toRightOf="@+id/thumb"
-                android:padding="8dp" />
-        </RelativeLayout>
-
-    </android.support.v7.widget.CardView>
+    </ScrollView>
 </RelativeLayout>
