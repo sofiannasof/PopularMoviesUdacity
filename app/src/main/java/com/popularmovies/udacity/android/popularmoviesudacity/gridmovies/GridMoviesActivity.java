@@ -41,7 +41,7 @@ public class GridMoviesActivity extends AppCompatActivity
     private Movie movie;
     private MoviesContract.Presenter mPresenter;
     private MoviesAdapter mHomeAdapter;
-    private int mCurrentMoviePageNumber = 0;
+    private int mCurrentMoviePageNumber = 1;
     private ProgressBar mProgressBar;
     private SharedPreferences prefs;
     private int GRID_COLUMNS = 2;
@@ -64,8 +64,7 @@ public class GridMoviesActivity extends AppCompatActivity
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
         mHomeAdapter = new MoviesAdapter();
 
-        mHomeAdapter.setOnMovieClickedListener(() -> mRecyclerView.post(() -> fetchPage()));
-        refresh();
+        mHomeAdapter.setOnMovieClickedListener(() -> mRecyclerView.post(() -> onLoadMoreData()));
         fetchPage();
 
         mRecyclerView.setHasFixedSize(true);
@@ -75,15 +74,13 @@ public class GridMoviesActivity extends AppCompatActivity
     }
 
     private void refresh() {
-        mCurrentMoviePageNumber = 0;
+        mCurrentMoviePageNumber = 1;
         mHomeAdapter.clear();
         fetchPage();
         refreshLayout.setRefreshing(false);
     }
 
     private void fetchPage() {
-        mCurrentMoviePageNumber++;
-
         if(!previouslyStarted) {
             SettingsUtils.isFirstRunProcessComplete(getApplicationContext());
             prefs.edit().putBoolean(getString(R.string.prefs_isFirstLaunch), true).commit();
@@ -97,10 +94,7 @@ public class GridMoviesActivity extends AppCompatActivity
         }
 
         mPresenter.loadMovies(mCurrentMoviePageNumber, mode);
-
-        if (movie != null) {
-            mHomeAdapter.addData(movie.getResults());
-        }
+        mCurrentMoviePageNumber++;
     }
 
     @Override
@@ -129,7 +123,9 @@ public class GridMoviesActivity extends AppCompatActivity
     @Override
     public void onLoadMoreData() {
         mProgressBar.setVisibility(View.VISIBLE);
-        fetchPage();
+        if (mCurrentMoviePageNumber != 1) {
+            fetchPage();
+        }
     }
 
     @Override
