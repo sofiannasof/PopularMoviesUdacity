@@ -68,8 +68,9 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ItemViewHo
                 mLoading = true;
             }
         } else {
-            // TODO: deal with null images
-            Picasso.with(mContext).load(movie.getPoster_path()).into(itemViewHolder.imageView);
+            Picasso.with(mContext).load(movie.getPoster_path())
+                    .placeholder(R.drawable.ic_posterplaceholder)
+                    .into(itemViewHolder.imageView);
             itemViewHolder.itemView.setOnClickListener(v ->
                     startMovieDetailsActivity(mMovies.get(i)));
         }
