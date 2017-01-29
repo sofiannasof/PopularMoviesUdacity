@@ -1,6 +1,7 @@
 package com.popularmovies.udacity.android.popularmoviesudacity.gridMovies;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -44,10 +46,16 @@ public class GridMoviesActivity extends AppCompatActivity
     private int mCurrentMoviePageNumber = 1;
     private ProgressBar mProgressBar;
     private SharedPreferences prefs;
-    private int GRID_COLUMNS = 2;
     private String mode = "popular";
     private boolean previouslyStarted;
     private SwipeRefreshLayout refreshLayout;
+
+    public static int calculateNoOfColumns(Context context) {
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+        int noOfColumns = (int) (dpWidth / 180);
+        return noOfColumns;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +76,7 @@ public class GridMoviesActivity extends AppCompatActivity
         fetchPage();
 
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(this, GRID_COLUMNS));
+        mRecyclerView.setLayoutManager(new GridLayoutManager(this, calculateNoOfColumns(getApplicationContext())));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setAdapter(mHomeAdapter);
     }
