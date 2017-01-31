@@ -25,6 +25,7 @@ import com.popularmovies.udacity.android.popularmoviesudacity.gridMovies.adapter
 import com.popularmovies.udacity.android.popularmoviesudacity.model.Movie;
 import com.popularmovies.udacity.android.popularmoviesudacity.settings.MyPreferences;
 import com.popularmovies.udacity.android.popularmoviesudacity.utils.SettingsUtils;
+import com.popularmovies.udacity.android.popularmoviesudacity.utils.Utils;
 
 import javax.inject.Inject;
 
@@ -100,9 +101,12 @@ public class GridMoviesActivity extends AppCompatActivity
                 mode = "top_rated";
             }
         }
-
-        mPresenter.loadMovies(mCurrentMoviePageNumber, mode);
-        mCurrentMoviePageNumber++;
+        if (!Utils.isOnline(this)) {
+            Toast.makeText(this, R.string.message_no_network_connection, Toast.LENGTH_SHORT).show();
+        } else {
+            mPresenter.loadMovies(mCurrentMoviePageNumber, mode);
+            mCurrentMoviePageNumber++;
+        }
     }
 
     @Override
