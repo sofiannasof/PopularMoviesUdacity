@@ -37,6 +37,7 @@ public class GridMoviesActivity extends AppCompatActivity
         implements MoviesContract.View, LoadListener {
 
     private static final String LOG_TAG = GridMoviesActivity.class.getName();
+    private static final String SCROLL_POSITION_KEY = "scroll";
 
     @Inject
     AppRemoteDataStore appRemoteDataStore;
@@ -50,6 +51,9 @@ public class GridMoviesActivity extends AppCompatActivity
     private String mode = "popular";
     private boolean previouslyStarted;
     private SwipeRefreshLayout refreshLayout;
+    private GridLayoutManager mLayoutManager;
+    private int scrollPosition = 0;
+    private RecyclerView mRecyclerView;
 
     public static int calculateNoOfColumns(Context context) {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
@@ -69,7 +73,7 @@ public class GridMoviesActivity extends AppCompatActivity
         refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh);
         refreshLayout.setOnRefreshListener(() -> refresh());
 
-        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
         mHomeAdapter = new MoviesAdapter();
 
@@ -77,9 +81,17 @@ public class GridMoviesActivity extends AppCompatActivity
         fetchPage();
 
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(this, calculateNoOfColumns(getApplicationContext())));
+        mLayoutManager = new GridLayoutManager(this, calculateNoOfColumns(getApplicationContext()));
+        mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setAdapter(mHomeAdapter);
+
+        if (savedInstanceState != null) {
+            if (savedInstanceState.containsKey(SCROLL_POSITION_KEY)) {
+                scrollPosition = savedInstanceState.getInt(SCROLL_POSITION_KEY, 0);
+                mLayoutManager.scrollToPosition(scrollPosition);
+            }
+        }
     }
 
     private void refresh() {
@@ -114,6 +126,7 @@ public class GridMoviesActivity extends AppCompatActivity
         mProgressBar.setVisibility(View.VISIBLE);
         this.movie = movie;
         mHomeAdapter.addData(movie.getResults());
+        mRecyclerView.scrollToPosition(scrollPosition);
     }
 
     @Override
@@ -164,6 +177,12 @@ public class GridMoviesActivity extends AppCompatActivity
     public void startSettingsActivity() {
         Intent intent = new Intent(GridMoviesActivity.this, MyPreferences.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(SCROLL_POSITION_KEY, mLayoutManager.findFirstVisibleItemPosition());
     }
 }
 
