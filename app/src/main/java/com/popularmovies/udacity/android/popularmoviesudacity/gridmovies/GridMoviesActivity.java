@@ -24,7 +24,6 @@ import com.popularmovies.udacity.android.popularmoviesudacity.data.MovieApplicat
 import com.popularmovies.udacity.android.popularmoviesudacity.gridMovies.adapter.MoviesAdapter;
 import com.popularmovies.udacity.android.popularmoviesudacity.model.Movie;
 import com.popularmovies.udacity.android.popularmoviesudacity.settings.MyPreferences;
-import com.popularmovies.udacity.android.popularmoviesudacity.utils.SettingsUtils;
 import com.popularmovies.udacity.android.popularmoviesudacity.utils.Utils;
 
 import javax.inject.Inject;
@@ -34,7 +33,8 @@ import javax.inject.Inject;
  */
 
 public class GridMoviesActivity extends AppCompatActivity
-        implements MoviesContract.View, LoadListener {
+        implements MoviesContract.View, LoadListener,
+        SharedPreferences.OnSharedPreferenceChangeListener {
 
     private static final String LOG_TAG = GridMoviesActivity.class.getName();
     private static final String SCROLL_POSITION_KEY = "scroll";
@@ -68,23 +68,24 @@ public class GridMoviesActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         MovieApplication.getAppComponent().inject(this);
         new GridMoviesPresenter(appRemoteDataStore, this);
-        prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        previouslyStarted = prefs.getBoolean(getString(R.string.prefs_isFirstLaunch), false);
+
         refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh);
         refreshLayout.setOnRefreshListener(() -> refresh());
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
-        mHomeAdapter = new MoviesAdapter();
 
+        mHomeAdapter = new MoviesAdapter();
         mHomeAdapter.setOnMovieClickedListener(() -> mRecyclerView.post(() -> onLoadMoreData()));
-        fetchPage();
 
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new GridLayoutManager(this, calculateNoOfColumns(getApplicationContext()));
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setAdapter(mHomeAdapter);
+
+        setupSharedPreferences();
+        fetchPage();
 
         if (savedInstanceState != null) {
             if (savedInstanceState.containsKey(SCROLL_POSITION_KEY)) {
@@ -94,25 +95,22 @@ public class GridMoviesActivity extends AppCompatActivity
         }
     }
 
+    private void setupSharedPreferences() {
+        prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        mode = prefs.getString(getString(R.string.pref_order_by),
+                getResources().getString(R.string.pref_default_value));
+        prefs.registerOnSharedPreferenceChangeListener(this);
+    }
+
     private void refresh() {
         mCurrentMoviePageNumber = 1;
         mHomeAdapter.clear();
+        scrollPosition = 0;
         fetchPage();
         refreshLayout.setRefreshing(false);
     }
 
     private void fetchPage() {
-        if(!previouslyStarted) {
-            SettingsUtils.isFirstRunProcessComplete(getApplicationContext());
-            prefs.edit().putBoolean(getString(R.string.prefs_isFirstLaunch), true).commit();
-            prefs.edit().putString(getString(R.string.pref_order_by),mode).commit();
-        } else {
-            if (prefs.getAll().get(getString(R.string.pref_order_by)).equals("popular")) {
-                mode = "popular";
-            } else if (prefs.getAll().get(getString(R.string.pref_order_by)).equals("top_rated")) {
-                mode = "top_rated";
-            }
-        }
         if (!Utils.isOnline(this)) {
             Toast.makeText(this, R.string.message_no_network_connection, Toast.LENGTH_SHORT).show();
         } else {
@@ -183,6 +181,21 @@ public class GridMoviesActivity extends AppCompatActivity
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(SCROLL_POSITION_KEY, mLayoutManager.findFirstVisibleItemPosition());
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if(key.equals(getString(R.string.pref_order_by))) {
+            mode = sharedPreferences.getString(key, getResources().getString(R.string.pref_order));
+            refresh();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        PreferenceManager.getDefaultSharedPreferences(this)
+                .unregisterOnSharedPreferenceChangeListener(this);
     }
 }
 
