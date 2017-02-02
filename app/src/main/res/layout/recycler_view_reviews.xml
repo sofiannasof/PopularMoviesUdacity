@@ -20,6 +20,7 @@
         android:layout_alignParentRight="true"
         android:layout_below="@id/text_movie_review_content"
         android:gravity="end"
+        android:textColor="@color/colorAccent"
         tools:src="Author" />
 
 </RelativeLayout>

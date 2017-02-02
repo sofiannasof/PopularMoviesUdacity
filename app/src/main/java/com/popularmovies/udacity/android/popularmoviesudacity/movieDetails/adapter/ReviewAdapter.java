@@ -53,7 +53,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ItemViewHo
     public void onBindViewHolder(ItemViewHolder itemViewHolder, int i) {
         Review.Results review = mReviews.get(i);
         Log.e(LOG_TAG, review.getAuthor());
-        itemViewHolder.reviewTextView.setText(review.getContent());
+        itemViewHolder.reviewTextView.setText("\"" + review.getContent() + "\"");
         itemViewHolder.authorTextView.setText(review.getAuthor());
     }
 
