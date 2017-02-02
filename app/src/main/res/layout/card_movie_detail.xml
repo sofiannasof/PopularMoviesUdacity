@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_movie_detail"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/card_movie_title"
+    android:layout_centerHorizontal="true"
+    android:layout_margin="@dimen/card_margin"
+    android:background="@color/cardview_shadow_end_color"
+    tools:showIn="@layout/activity_movie_detail">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/thumb"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:padding="@dimen/card_padding"
+            tools:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/thumb"
+            android:layout_toRightOf="@+id/thumb"
+            android:padding="@dimen/card_padding"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/rating_size" />
+
+        <TextView
+            android:id="@+id/release_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/thumb"
+            android:layout_marginBottom="@dimen/card_margin"
+            android:layout_toEndOf="@+id/thumb"
+            android:layout_toRightOf="@+id/thumb"
+            android:padding="@dimen/card_padding" />
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>
