@@ -10,4 +10,6 @@
     <string name="pref_order_by">pref_order_by</string>
     <string name="message_no_network_connection">Check network connection</string>
     <string name="pref_default_value">popular</string>
+    <string name="detail_videos">Trailer</string>
+    <string name="detail_reviews">Reviews</string>
 </resources>

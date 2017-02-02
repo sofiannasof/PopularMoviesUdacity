@@ -20,6 +20,10 @@
 
             <include layout="@layout/card_movie_detail" />
 
+            <include layout="@layout/card_movie_videos" />
+
+            <include layout="@layout/card_movie_reviews" />
+
         </RelativeLayout>
     </ScrollView>
 </RelativeLayout>

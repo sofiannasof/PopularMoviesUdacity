@@ -4,10 +4,13 @@ import android.util.Log;
 
 import com.popularmovies.udacity.android.popularmoviesudacity.api.MovieService;
 import com.popularmovies.udacity.android.popularmoviesudacity.model.Movie;
+import com.popularmovies.udacity.android.popularmoviesudacity.model.Review;
+import com.popularmovies.udacity.android.popularmoviesudacity.model.Videos;
 
 import javax.inject.Inject;
 
 import retrofit2.Retrofit;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -48,6 +51,34 @@ public class AppRemoteDataStore implements MovieService {
             MovieService apiService = retrofit.create(MovieService.class);
 
             call = apiService.getMoviesTopRated(apiKey, page);
+        }
+        return call;
+    }
+
+    @Override
+    public Observable<Videos> getMovieTrailer(@Path("id") String id,
+                                              @Query("api_key") String apiKey,
+                                              @Query("page") int page) {
+        Log.d(LOG_TAG, "Loaded movie trailer");
+        Observable<Videos> call = null;
+        if (retrofit != null) {
+            MovieService apiService = retrofit.create(MovieService.class);
+
+            call = apiService.getMovieTrailer(id, apiKey, page);
+        }
+        return call;
+    }
+
+    @Override
+    public Observable<Review> getMovieReviews(@Path("id") String id,
+                                              @Query("api_key") String apiKey,
+                                              @Query("page") int page) {
+        Log.d(LOG_TAG, "Loaded movie reviews");
+        Observable<Review> call = null;
+        if (retrofit != null) {
+            MovieService apiService = retrofit.create(MovieService.class);
+
+            call = apiService.getMovieReviews(id, apiKey, page);
         }
         return call;
     }

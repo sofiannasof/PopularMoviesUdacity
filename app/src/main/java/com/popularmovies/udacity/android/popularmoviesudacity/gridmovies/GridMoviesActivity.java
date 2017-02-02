@@ -49,7 +49,6 @@ public class GridMoviesActivity extends AppCompatActivity
     private ProgressBar mProgressBar;
     private SharedPreferences prefs;
     private String mode = "popular";
-    private boolean previouslyStarted;
     private SwipeRefreshLayout refreshLayout;
     private GridLayoutManager mLayoutManager;
     private int scrollPosition = 0;

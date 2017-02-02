@@ -12,6 +12,8 @@ import com.popularmovies.udacity.android.popularmoviesudacity.R;
 import com.popularmovies.udacity.android.popularmoviesudacity.data.AppRemoteDataStore;
 import com.popularmovies.udacity.android.popularmoviesudacity.data.MovieApplication;
 import com.popularmovies.udacity.android.popularmoviesudacity.model.Movie;
+import com.popularmovies.udacity.android.popularmoviesudacity.model.Review;
+import com.popularmovies.udacity.android.popularmoviesudacity.utils.Utils;
 import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
@@ -33,8 +35,11 @@ public class MovieDetailsActivity extends AppCompatActivity
     TextView plot;
     TextView rating;
     ImageView thumb;
+    TextView reviews;
     private Movie.Results mMovie;
     private MovieDetailsContract.Presenter mPresenter;
+    private Review mReview;
+    private String id;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,14 +68,39 @@ public class MovieDetailsActivity extends AppCompatActivity
                     .placeholder(R.drawable.ic_posterplaceholder)
                     .error(R.drawable.ic_errorplaceholder)
                     .into(thumb);
+            id = Integer.toString(mMovie.getId());
 
+            reviews = (TextView) findViewById(R.id.reviews);
+            fetchMovie();
+            fetchReviews();
+        }
+    }
+
+    private void fetchMovie() {
+        if (!Utils.isOnline(this)) {
+            Toast.makeText(this, R.string.message_no_network_connection, Toast.LENGTH_SHORT).show();
+        } else {
+            mPresenter.loadMovie(mMovie);
+        }
+    }
+
+    private void fetchReviews() {
+        if (!Utils.isOnline(this)) {
+            Toast.makeText(this, R.string.message_no_network_connection, Toast.LENGTH_SHORT).show();
+        } else {
+            mPresenter.loadReview(1, id);
         }
     }
 
     @Override
     public void showMovie(Movie.Results movie) {
         this.mMovie = movie;
-        mPresenter.loadMovie(movie);
+    }
+
+    @Override
+    public void showReview(Review review) {
+        this.mReview = review;
+        reviews.setText(mReview.getResults().get(0).getContent());
     }
 
     @Override
@@ -80,6 +110,7 @@ public class MovieDetailsActivity extends AppCompatActivity
 
     @Override
     public void showComplete() {
+
     }
 
     @Override
