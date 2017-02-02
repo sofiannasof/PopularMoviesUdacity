@@ -13,7 +13,7 @@ public class Review {
     @SerializedName("page")
     public int page;
     @SerializedName("results")
-    public List<Results> results;
+    public List<Review.Results> results;
     @SerializedName("total_pages")
     public int total_pages;
     @SerializedName("total_results")

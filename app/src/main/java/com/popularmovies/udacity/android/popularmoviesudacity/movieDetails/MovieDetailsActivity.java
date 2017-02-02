@@ -3,6 +3,9 @@ package com.popularmovies.udacity.android.popularmoviesudacity.movieDetails;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,6 +16,7 @@ import com.popularmovies.udacity.android.popularmoviesudacity.data.AppRemoteData
 import com.popularmovies.udacity.android.popularmoviesudacity.data.MovieApplication;
 import com.popularmovies.udacity.android.popularmoviesudacity.model.Movie;
 import com.popularmovies.udacity.android.popularmoviesudacity.model.Review;
+import com.popularmovies.udacity.android.popularmoviesudacity.movieDetails.adapter.ReviewAdapter;
 import com.popularmovies.udacity.android.popularmoviesudacity.utils.Utils;
 import com.squareup.picasso.Picasso;
 
@@ -35,11 +39,13 @@ public class MovieDetailsActivity extends AppCompatActivity
     TextView plot;
     TextView rating;
     ImageView thumb;
-    TextView reviews;
     private Movie.Results mMovie;
     private MovieDetailsContract.Presenter mPresenter;
     private Review mReview;
     private String id;
+    private RecyclerView mRecyclerView;
+    private LinearLayoutManager mLayoutManager;
+    private ReviewAdapter mHomeAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,7 +76,14 @@ public class MovieDetailsActivity extends AppCompatActivity
                     .into(thumb);
             id = Integer.toString(mMovie.getId());
 
-            reviews = (TextView) findViewById(R.id.reviews);
+            mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_reviews);
+            mRecyclerView.setHasFixedSize(true);
+            mLayoutManager = new LinearLayoutManager(this);
+            mRecyclerView.setLayoutManager(mLayoutManager);
+            mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+            mHomeAdapter = new ReviewAdapter();
+            mRecyclerView.setAdapter(mHomeAdapter);
+
             fetchMovie();
             fetchReviews();
         }
@@ -100,7 +113,7 @@ public class MovieDetailsActivity extends AppCompatActivity
     @Override
     public void showReview(Review review) {
         this.mReview = review;
-        reviews.setText(mReview.getResults().get(0).getContent());
+        mHomeAdapter.addData(review.getResults());
     }
 
     @Override
