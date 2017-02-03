@@ -1,6 +1,8 @@
 package com.popularmovies.udacity.android.popularmoviesudacity.movieDetails.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -55,6 +57,15 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ItemViewHo
         Log.e(LOG_TAG, review.getAuthor());
         itemViewHolder.reviewTextView.setText("\"" + review.getContent() + "\"");
         itemViewHolder.authorTextView.setText(review.getAuthor());
+        itemViewHolder.itemView.setOnClickListener(v ->
+                showReviewsinWebView(review));
+    }
+
+    private void showReviewsinWebView(Review.Results review) {
+        if (review != null && review.getUrl() != null) {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(review.getUrl()));
+            mContext.startActivity(intent);
+        }
     }
 
     @Override
