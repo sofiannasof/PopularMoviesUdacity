@@ -18,7 +18,9 @@ import com.popularmovies.udacity.android.popularmoviesudacity.data.AppRemoteData
 import com.popularmovies.udacity.android.popularmoviesudacity.data.MovieApplication;
 import com.popularmovies.udacity.android.popularmoviesudacity.model.Movie;
 import com.popularmovies.udacity.android.popularmoviesudacity.model.Review;
+import com.popularmovies.udacity.android.popularmoviesudacity.model.Videos;
 import com.popularmovies.udacity.android.popularmoviesudacity.movieDetails.adapter.ReviewAdapter;
+import com.popularmovies.udacity.android.popularmoviesudacity.movieDetails.adapter.VideosAdapter;
 import com.popularmovies.udacity.android.popularmoviesudacity.utils.Utils;
 import com.squareup.picasso.Picasso;
 
@@ -42,13 +44,18 @@ public class MovieDetailsActivity extends AppCompatActivity
     TextView rating;
     ImageView thumb;
     CardView cardMovieReviews;
+    CardView cardMovieVideos;
     private Movie.Results mMovie;
     private MovieDetailsContract.Presenter mPresenter;
-    private Review mReview;
     private String id;
-    private RecyclerView mRecyclerView;
-    private LinearLayoutManager mLayoutManager;
-    private ReviewAdapter mHomeAdapter;
+    private Review mReview;
+    private Videos mVideos;
+    private RecyclerView mRecyclerViewReviews;
+    private RecyclerView mRecyclerViewVideos;
+    private LinearLayoutManager mLayoutManagerReviews;
+    private LinearLayoutManager mLayoutManagerVideos;
+    private ReviewAdapter mReviewsAdapter;
+    private VideosAdapter mVideosAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -79,16 +86,28 @@ public class MovieDetailsActivity extends AppCompatActivity
                     .into(thumb);
             id = Integer.toString(mMovie.getId());
 
-            mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_reviews);
-            mRecyclerView.setHasFixedSize(true);
-            mLayoutManager = new LinearLayoutManager(this);
-            mRecyclerView.setLayoutManager(mLayoutManager);
-            mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-            mHomeAdapter = new ReviewAdapter();
-            mRecyclerView.setAdapter(mHomeAdapter);
+            mRecyclerViewReviews = (RecyclerView) findViewById(R.id.recycler_view_reviews);
+            mRecyclerViewReviews.setHasFixedSize(true);
+            mLayoutManagerReviews = new LinearLayoutManager(this);
+            mRecyclerViewReviews.setLayoutManager(mLayoutManagerReviews);
+            mRecyclerViewReviews.setItemAnimator(new DefaultItemAnimator());
+            mReviewsAdapter = new ReviewAdapter();
             cardMovieReviews = (CardView) findViewById(R.id.card_movie_reviews);
+            mRecyclerViewReviews.setAdapter(mReviewsAdapter);
+
+            mRecyclerViewVideos = (RecyclerView) findViewById(R.id.recycler_view_videos);
+            mRecyclerViewVideos.setHasFixedSize(true);
+            mLayoutManagerVideos = new LinearLayoutManager(getApplicationContext(),
+                    LinearLayoutManager.HORIZONTAL, false);
+            mRecyclerViewVideos.setLayoutManager(mLayoutManagerVideos);
+            mRecyclerViewVideos.setItemAnimator(new DefaultItemAnimator());
+            mVideosAdapter = new VideosAdapter();
+            cardMovieVideos = (CardView) findViewById(R.id.card_movie_videos);
+            mRecyclerViewVideos.setAdapter(mVideosAdapter);
+
             fetchMovie();
             fetchReviews();
+            fetchVideos();
         }
     }
 
@@ -108,6 +127,14 @@ public class MovieDetailsActivity extends AppCompatActivity
         }
     }
 
+    private void fetchVideos() {
+        if (!Utils.isOnline(this)) {
+            Toast.makeText(this, R.string.message_no_network_connection, Toast.LENGTH_SHORT).show();
+        } else {
+            mPresenter.loadVideo(1, id);
+        }
+    }
+
     @Override
     public void showMovie(Movie.Results movie) {
         this.mMovie = movie;
@@ -116,8 +143,8 @@ public class MovieDetailsActivity extends AppCompatActivity
     @Override
     public void showReview(Review review) {
         this.mReview = review;
-        mHomeAdapter.addData(review.getResults());
-        if (mHomeAdapter == null || mHomeAdapter.getItemCount() == 0) {
+        mReviewsAdapter.addData(review.getResults());
+        if (mReviewsAdapter == null || mReviewsAdapter.getItemCount() == 0) {
             cardMovieReviews.setVisibility(View.GONE);
         } else {
             cardMovieReviews.setVisibility(View.VISIBLE);
@@ -125,9 +152,20 @@ public class MovieDetailsActivity extends AppCompatActivity
     }
 
     @Override
+    public void showVideos(Videos videos) {
+        this.mVideos = videos;
+        mVideosAdapter.addData(videos.getResults());
+        if (mVideosAdapter == null || mVideosAdapter.getItemCount() == 0) {
+            cardMovieVideos.setVisibility(View.GONE);
+        } else {
+            cardMovieVideos.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
     public void showError(String message) {
         Toast.makeText(this, "Error loading movie", Toast.LENGTH_SHORT).show();
-        if (mHomeAdapter == null || mHomeAdapter.getItemCount() == 0) {
+        if (mReviewsAdapter == null || mReviewsAdapter.getItemCount() == 0) {
             cardMovieReviews.setVisibility(View.GONE);
         } else {
             cardMovieReviews.setVisibility(View.VISIBLE);

@@ -13,6 +13,10 @@ public class Videos {
     @SerializedName("results")
     public List<Results> results;
 
+    public List<Videos.Results> getResults() {
+        return results;
+    }
+
     public static class Results {
         @SerializedName("id")
         public String id;
@@ -30,5 +34,9 @@ public class Videos {
         public int size;
         @SerializedName("type")
         public String type;
+
+        public String getKey() {
+            return "https://img.youtube.com/vi/" + key + "/mqdefault.jpg";
+        }
     }
 }

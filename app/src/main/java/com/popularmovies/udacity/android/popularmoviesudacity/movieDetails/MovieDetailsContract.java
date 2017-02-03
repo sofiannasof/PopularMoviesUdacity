@@ -4,6 +4,7 @@ import com.popularmovies.udacity.android.popularmoviesudacity.base.BasePresenter
 import com.popularmovies.udacity.android.popularmoviesudacity.base.BaseView;
 import com.popularmovies.udacity.android.popularmoviesudacity.model.Movie;
 import com.popularmovies.udacity.android.popularmoviesudacity.model.Review;
+import com.popularmovies.udacity.android.popularmoviesudacity.model.Videos;
 
 /**
  * Created by smenesid on 25-Jan-17.
@@ -16,6 +17,8 @@ public class MovieDetailsContract {
 
         void showReview(Review review);
 
+        void showVideos(Videos videos);
+
         void showError(String message);
 
         void showComplete();
@@ -25,5 +28,7 @@ public class MovieDetailsContract {
         void loadMovie(Movie.Results movie);
 
         void loadReview(int page, String id);
+
+        void loadVideo(int page, String id);
     }
 }

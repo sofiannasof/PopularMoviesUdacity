@@ -6,6 +6,7 @@ import com.popularmovies.udacity.android.popularmoviesudacity.BuildConfig;
 import com.popularmovies.udacity.android.popularmoviesudacity.data.AppRemoteDataStore;
 import com.popularmovies.udacity.android.popularmoviesudacity.model.Movie;
 import com.popularmovies.udacity.android.popularmoviesudacity.model.Review;
+import com.popularmovies.udacity.android.popularmoviesudacity.model.Videos;
 
 import rx.Observer;
 import rx.Subscription;
@@ -66,6 +67,36 @@ public class MovieDetailsPresenter implements MovieDetailsContract.Presenter {
                     public void onNext(Review review) {
                         Log.d(LOG_TAG, "review transfer success" + " page = " + page);
                         view.showReview(review);
+                    }
+                });
+    }
+
+    @Override
+    public void loadVideo(int page, String id) {
+        if (appRemoteDataStore == null) {
+            appRemoteDataStore = new AppRemoteDataStore();
+        }
+
+        subscription = appRemoteDataStore.getMovieTrailer(id, BuildConfig.THE_MOVIE_DB_API_KEY, page)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Videos>() {
+                    @Override
+                    public final void onCompleted() {
+                        Log.d(LOG_TAG, "video completed" + " page = " + page);
+                        view.showComplete();
+                    }
+
+                    @Override
+                    public final void onError(Throwable e) {
+                        Log.e(LOG_TAG, e.getMessage() + " page = " + page);
+                        view.showError(e.toString());
+                    }
+
+                    @Override
+                    public void onNext(Videos videos) {
+                        Log.d(LOG_TAG, "video transfer success" + " page = " + page);
+                        view.showVideos(videos);
                     }
                 });
     }
