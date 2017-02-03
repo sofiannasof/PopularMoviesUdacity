@@ -3,9 +3,11 @@ package com.popularmovies.udacity.android.popularmoviesudacity.movieDetails;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,6 +41,7 @@ public class MovieDetailsActivity extends AppCompatActivity
     TextView plot;
     TextView rating;
     ImageView thumb;
+    CardView cardMovieReviews;
     private Movie.Results mMovie;
     private MovieDetailsContract.Presenter mPresenter;
     private Review mReview;
@@ -83,7 +86,7 @@ public class MovieDetailsActivity extends AppCompatActivity
             mRecyclerView.setItemAnimator(new DefaultItemAnimator());
             mHomeAdapter = new ReviewAdapter();
             mRecyclerView.setAdapter(mHomeAdapter);
-
+            cardMovieReviews = (CardView) findViewById(R.id.card_movie_reviews);
             fetchMovie();
             fetchReviews();
         }
@@ -114,11 +117,21 @@ public class MovieDetailsActivity extends AppCompatActivity
     public void showReview(Review review) {
         this.mReview = review;
         mHomeAdapter.addData(review.getResults());
+        if (mHomeAdapter == null || mHomeAdapter.getItemCount() == 0) {
+            cardMovieReviews.setVisibility(View.GONE);
+        } else {
+            cardMovieReviews.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
     public void showError(String message) {
         Toast.makeText(this, "Error loading movie", Toast.LENGTH_SHORT).show();
+        if (mHomeAdapter == null || mHomeAdapter.getItemCount() == 0) {
+            cardMovieReviews.setVisibility(View.GONE);
+        } else {
+            cardMovieReviews.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
