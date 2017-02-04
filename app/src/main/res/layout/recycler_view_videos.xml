@@ -6,15 +6,17 @@
     <ImageView
         android:id="@+id/thumb_video"
         android:layout_width="207dp"
-        android:layout_height="115dp" />
+        android:layout_height="115dp"
+        android:layout_centerHorizontal="true" />
 
-    <!--    <ImageView
-            android:id="@+id/trailer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:gravity="end"
-            android:textColor="@color/colorAccent" />-->
+    <!--        <ImageView
+                android:id="@+id/trailer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:gravity="end"
+                android:textColor="@color/colorAccent"
+                android:layout_centerHorizontal="true" />-->
 
 </RelativeLayout>
