@@ -35,8 +35,16 @@ public class Videos {
         @SerializedName("type")
         public String type;
 
-        public String getKey() {
+        public String getName() {
+            return name;
+        }
+
+        public String getVideoThumb() {
             return "https://img.youtube.com/vi/" + key + "/mqdefault.jpg";
+        }
+
+        public String getVideo() {
+            return "http://www.youtube.com/watch?v=" + key;
         }
     }
 }

@@ -4,14 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.popularmovies.udacity.android.popularmoviesudacity.R;
 import com.popularmovies.udacity.android.popularmoviesudacity.model.Videos;
+import com.popularmovies.udacity.android.popularmoviesudacity.utils.Utils;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -55,19 +56,22 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.ItemViewHo
     @Override
     public void onBindViewHolder(ItemViewHolder itemViewHolder, int i) {
         Videos.Results video = mVideos.get(i);
-        Log.e(LOG_TAG, video.getKey());
-        Picasso.with(mContext).load(video.getKey())
+        itemViewHolder.title.setText(video.getName());
+        Picasso.with(mContext).load(video.getVideoThumb())
                 .placeholder(R.drawable.ic_posterplaceholder)
                 .error(R.drawable.ic_errorplaceholder)
                 .into(itemViewHolder.thumb_video);
-
-        itemViewHolder.itemView.setOnClickListener(v ->
+        itemViewHolder.thumb_video.setOnClickListener(v ->
                 showTrailerinYouTube(video));
+        itemViewHolder.play.setOnClickListener(v ->
+                showTrailerinYouTube(video));
+        itemViewHolder.share.setOnClickListener(v ->
+                Utils.shareTrailer(mContext, video));
     }
 
     private void showTrailerinYouTube(Videos.Results video) {
-        if (video != null && video.getKey() != null) {
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(video.getKey()));
+        if (video != null && video.getVideoThumb() != null) {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(video.getVideo()));
             mContext.startActivity(intent);
         }
     }
@@ -79,10 +83,16 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.ItemViewHo
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
         ImageView thumb_video;
+        TextView title;
+        ImageView play;
+        ImageView share;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
             thumb_video = (ImageView) itemView.findViewById(R.id.thumb_video);
+            title = (TextView) itemView.findViewById(R.id.movie_trailer_title);
+            play = (ImageView) itemView.findViewById(R.id.movie_trailer_play);
+            share = (ImageView) itemView.findViewById(R.id.movie_trailer_share);
         }
     }
 }

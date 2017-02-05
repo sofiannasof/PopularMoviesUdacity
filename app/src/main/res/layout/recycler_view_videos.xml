@@ -3,20 +3,48 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/thumb_video"
+
+    <TextView
+        android:id="@+id/movie_trailer_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:padding="@dimen/card_padding"
+        android:textColor="@color/colorAccent"
+        android:textSize="20sp" />
+
+    <RelativeLayout
+        android:id="@+id/movie_trailer"
         android:layout_width="207dp"
         android:layout_height="115dp"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@id/movie_trailer_title"
+        android:layout_centerHorizontal="true">
 
-    <!--        <ImageView
-                android:id="@+id/trailer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:gravity="end"
-                android:textColor="@color/colorAccent"
-                android:layout_centerHorizontal="true" />-->
+        <ImageView
+            android:id="@+id/thumb_video"
+            android:layout_width="207dp"
+            android:layout_height="115dp"
+            android:layout_centerHorizontal="true" />
+
+        <ImageView
+            android:id="@+id/movie_trailer_play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_youtube" />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/movie_trailer_share"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/movie_trailer"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_share" />
 
 </RelativeLayout>
