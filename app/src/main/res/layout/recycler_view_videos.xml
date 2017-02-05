@@ -13,19 +13,19 @@
         android:maxLines="1"
         android:padding="@dimen/card_padding"
         android:textColor="@color/colorAccent"
-        android:textSize="20sp" />
+        android:textSize="@dimen/trailer_title" />
 
     <RelativeLayout
         android:id="@+id/movie_trailer"
-        android:layout_width="207dp"
-        android:layout_height="115dp"
+        android:layout_width="@dimen/trailer_width"
+        android:layout_height="@dimen/trailer_height"
         android:layout_below="@id/movie_trailer_title"
         android:layout_centerHorizontal="true">
 
         <ImageView
             android:id="@+id/thumb_video"
-            android:layout_width="207dp"
-            android:layout_height="115dp"
+            android:layout_width="@dimen/trailer_width"
+            android:layout_height="@dimen/trailer_height"
             android:layout_centerHorizontal="true" />
 
         <ImageView

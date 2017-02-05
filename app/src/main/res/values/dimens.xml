@@ -7,4 +7,7 @@
     <dimen name="card_padding">8dp</dimen>
     <dimen name="title_size">40sp</dimen>
     <dimen name="rating_size">33sp</dimen>
+    <dimen name="trailer_title">20sp</dimen>
+    <dimen name="trailer_width">207dp</dimen>
+    <dimen name="trailer_height">115dp</dimen>
 </resources>
