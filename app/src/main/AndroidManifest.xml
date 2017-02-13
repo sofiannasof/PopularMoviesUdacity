@@ -26,6 +26,11 @@
             android:name=".settings.MyPreferences"
             android:parentActivityName=".gridMovies.GridMoviesActivity"></activity>
 
+        <provider
+            android:name=".data.local.MoviesProvider"
+            android:authorities="com.popularmovies.udacity.android.popularmoviesudacity"
+            android:exported="false"
+            android:syncable="true" />
     </application>
 
 </manifest>
