@@ -18,7 +18,7 @@ import rx.Observable;
  * Created by smenesid on 23-Jan-17.
  */
 
-public class AppRemoteDataStore implements MovieService {
+public class AppRemoteDataStore implements AppDataStore {
 
     private static final String LOG_TAG = AppRemoteDataStore.class.getName();
 
