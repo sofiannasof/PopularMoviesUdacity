@@ -2,7 +2,7 @@ package com.popularmovies.udacity.android.popularmoviesudacity.movieDetails;
 
 import com.popularmovies.udacity.android.popularmoviesudacity.base.BasePresenter;
 import com.popularmovies.udacity.android.popularmoviesudacity.base.BaseView;
-import com.popularmovies.udacity.android.popularmoviesudacity.model.Movie;
+import com.popularmovies.udacity.android.popularmoviesudacity.model.MovieResults;
 import com.popularmovies.udacity.android.popularmoviesudacity.model.Review;
 import com.popularmovies.udacity.android.popularmoviesudacity.model.Videos;
 
@@ -13,7 +13,7 @@ import com.popularmovies.udacity.android.popularmoviesudacity.model.Videos;
 public class MovieDetailsContract {
 
     public interface View extends BaseView<MovieDetailsContract.Presenter> {
-        void showMovie(Movie.Results movie);
+        void showMovie(MovieResults movie);
 
         void showReview(Review review);
 
@@ -25,7 +25,7 @@ public class MovieDetailsContract {
     }
 
     public interface Presenter extends BasePresenter {
-        void loadMovie(Movie.Results movie);
+        void loadMovie(MovieResults movie);
 
         void loadReview(int page, String id);
 

@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import com.google.gson.Gson;
 import com.popularmovies.udacity.android.popularmoviesudacity.R;
 import com.popularmovies.udacity.android.popularmoviesudacity.gridMovies.LoadListener;
-import com.popularmovies.udacity.android.popularmoviesudacity.model.Movie;
+import com.popularmovies.udacity.android.popularmoviesudacity.model.MovieResults;
 import com.popularmovies.udacity.android.popularmoviesudacity.movieDetails.MovieDetailsActivity;
 import com.squareup.picasso.Picasso;
 
@@ -26,7 +26,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ItemViewHo
 
     private static final String LOG_TAG = MoviesAdapter.class.getName();
 
-    List<Movie.Results> mMovies;
+    List<MovieResults> mMovies;
     private LoadListener mLoadListener;
     private Context mContext;
     private boolean mLoading;
@@ -37,7 +37,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ItemViewHo
         mMovies = new ArrayList<>();
     }
 
-    public void addData(List<Movie.Results> movie) {
+    public void addData(List<MovieResults> movie) {
         mMovies.addAll(movie);
         mLoading = false;
         notifyDataSetChanged();
@@ -60,7 +60,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ItemViewHo
 
     @Override
     public void onBindViewHolder(ItemViewHolder itemViewHolder, int i) {
-        final Movie.Results movie = mMovies.get(i);
+        final MovieResults movie = mMovies.get(i);
         if (canLoadMoreMovies(i)) {
             if (mLoadListener != null) {
                 mLoadListener.onLoadMoreData();
@@ -91,7 +91,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ItemViewHo
         this.mLoadListener = loadListener;
     }
 
-    public void startMovieDetailsActivity(Movie.Results movie) {
+    public void startMovieDetailsActivity(MovieResults movie) {
         Intent intent = new Intent(mContext, MovieDetailsActivity.class);
         intent.putExtra(Intent.EXTRA_TEXT, new Gson().toJson(movie));
         mContext.startActivity(intent);

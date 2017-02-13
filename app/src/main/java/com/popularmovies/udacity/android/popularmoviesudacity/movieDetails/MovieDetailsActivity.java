@@ -16,7 +16,7 @@ import com.google.gson.Gson;
 import com.popularmovies.udacity.android.popularmoviesudacity.R;
 import com.popularmovies.udacity.android.popularmoviesudacity.data.AppRemoteDataStore;
 import com.popularmovies.udacity.android.popularmoviesudacity.data.MovieApplication;
-import com.popularmovies.udacity.android.popularmoviesudacity.model.Movie;
+import com.popularmovies.udacity.android.popularmoviesudacity.model.MovieResults;
 import com.popularmovies.udacity.android.popularmoviesudacity.model.Review;
 import com.popularmovies.udacity.android.popularmoviesudacity.model.Videos;
 import com.popularmovies.udacity.android.popularmoviesudacity.movieDetails.adapter.ReviewAdapter;
@@ -45,7 +45,7 @@ public class MovieDetailsActivity extends AppCompatActivity
     ImageView thumb;
     CardView cardMovieReviews;
     CardView cardMovieVideos;
-    private Movie.Results mMovie;
+    private MovieResults mMovie;
     private MovieDetailsContract.Presenter mPresenter;
     private String id;
     private Review mReview;
@@ -69,7 +69,7 @@ public class MovieDetailsActivity extends AppCompatActivity
         if (extras.hasExtra(Intent.EXTRA_TEXT)) {
             String value = extras.getStringExtra(Intent.EXTRA_TEXT);
 
-            mMovie = gson.fromJson(value, Movie.Results.class);
+            mMovie = gson.fromJson(value, MovieResults.class);
             originalTitle = (TextView) findViewById(R.id.original_title);
             originalTitle.setText(mMovie.getOriginal_title());
             releaseDate = (TextView) findViewById(R.id.release_date);
@@ -136,7 +136,7 @@ public class MovieDetailsActivity extends AppCompatActivity
     }
 
     @Override
-    public void showMovie(Movie.Results movie) {
+    public void showMovie(MovieResults movie) {
         this.mMovie = movie;
     }
 

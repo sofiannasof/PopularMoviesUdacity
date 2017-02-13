@@ -4,8 +4,6 @@ import com.popularmovies.udacity.android.popularmoviesudacity.model.Movie;
 import com.popularmovies.udacity.android.popularmoviesudacity.model.Review;
 import com.popularmovies.udacity.android.popularmoviesudacity.model.Videos;
 
-import retrofit2.http.Path;
-import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -14,17 +12,11 @@ import rx.Observable;
 
 public interface AppDataStore {
 
-    Observable<Movie> getMoviesPopular(@Query("api_key") String apiKey,
-                                       @Query("page") int page);
+    Observable<Movie> getMoviesPopular(String apiKey, int page);
 
-    Observable<Movie> getMoviesTopRated(@Query("api_key") String apiKey,
-                                        @Query("page") int page);
+    Observable<Movie> getMoviesTopRated(String apiKey, int page);
 
-    Observable<Videos> getMovieTrailer(@Path("id") String id,
-                                       @Query("api_key") String api_key,
-                                       @Query("page") int page);
+    Observable<Videos> getMovieTrailer(String id, String api_key, int page);
 
-    Observable<Review> getMovieReviews(@Path("id") String id,
-                                       @Query("api_key") String api_key,
-                                       @Query("page") int page);
+    Observable<Review> getMovieReviews(String id, String api_key, int page);
 }

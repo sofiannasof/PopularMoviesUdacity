@@ -4,7 +4,7 @@ import android.util.Log;
 
 import com.popularmovies.udacity.android.popularmoviesudacity.BuildConfig;
 import com.popularmovies.udacity.android.popularmoviesudacity.data.AppRemoteDataStore;
-import com.popularmovies.udacity.android.popularmoviesudacity.model.Movie;
+import com.popularmovies.udacity.android.popularmoviesudacity.model.MovieResults;
 import com.popularmovies.udacity.android.popularmoviesudacity.model.Review;
 import com.popularmovies.udacity.android.popularmoviesudacity.model.Videos;
 
@@ -33,7 +33,7 @@ public class MovieDetailsPresenter implements MovieDetailsContract.Presenter {
     }
 
     @Override
-    public void loadMovie(Movie.Results movie) {
+    public void loadMovie(MovieResults movie) {
         if (appRemoteDataStore == null) {
             appRemoteDataStore = new AppRemoteDataStore();
         }
