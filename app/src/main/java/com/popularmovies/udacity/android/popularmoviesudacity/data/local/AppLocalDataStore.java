@@ -57,4 +57,8 @@ public class AppLocalDataStore implements AppDataStore {
     public Observable<Review> getMovieReviews(String id, String api_key, int page) {
         return null;
     }
+
+    public void saveFieldsToDatabase(Movie movie) {
+        //mStorIOContentResolver.put().objects(movie.getResults()).prepare().executeAsBlocking();
+    }
 }

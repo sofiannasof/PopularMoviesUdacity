@@ -3,6 +3,7 @@ package com.popularmovies.udacity.android.popularmoviesudacity.data;
 import android.util.Log;
 
 import com.popularmovies.udacity.android.popularmoviesudacity.api.MovieService;
+import com.popularmovies.udacity.android.popularmoviesudacity.data.local.AppLocalDataStore;
 import com.popularmovies.udacity.android.popularmoviesudacity.model.Movie;
 import com.popularmovies.udacity.android.popularmoviesudacity.model.Review;
 import com.popularmovies.udacity.android.popularmoviesudacity.model.Videos;
@@ -24,6 +25,8 @@ public class AppRemoteDataStore implements AppDataStore {
 
     @Inject
     Retrofit retrofit;
+    @Inject
+    AppLocalDataStore appLocalDataStore;
 
     public AppRemoteDataStore() {
         MovieApplication.getAppComponent().inject(this);
@@ -37,7 +40,8 @@ public class AppRemoteDataStore implements AppDataStore {
         if (retrofit != null) {
             MovieService apiService = retrofit.create(MovieService.class);
 
-            call = apiService.getMoviesPopular(apiKey, page);
+            call = apiService.getMoviesPopular(apiKey, page)
+                    .doOnNext(appLocalDataStore::saveFieldsToDatabase);
         }
         return call;
     }
