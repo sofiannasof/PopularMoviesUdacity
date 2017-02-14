@@ -2,6 +2,7 @@ package com.popularmovies.udacity.android.popularmoviesudacity.movieDetails;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -57,6 +58,7 @@ public class MovieDetailsActivity extends AppCompatActivity
     private LinearLayoutManager mLayoutManagerVideos;
     private ReviewAdapter mReviewsAdapter;
     private VideosAdapter mVideosAdapter;
+    private FloatingActionButton fab;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -113,6 +115,8 @@ public class MovieDetailsActivity extends AppCompatActivity
             mVideosAdapter = new VideosAdapter();
             cardMovieVideos = (CardView) findViewById(R.id.card_movie_videos);
             mRecyclerViewVideos.setAdapter(mVideosAdapter);
+            fab = (FloatingActionButton) findViewById(R.id.fab);
+            fab.setOnClickListener(v -> mPresenter.saveOrRemoveFavorite());
 
             fetchMovie();
             fetchReviews();
@@ -184,6 +188,15 @@ public class MovieDetailsActivity extends AppCompatActivity
     @Override
     public void showComplete() {
 
+    }
+
+    @Override
+    public void setIconFavorite(Boolean isFavorite) {
+        if (isFavorite) {
+            fab.setImageResource(R.drawable.ic_favorite_24dp);
+        } else {
+            fab.setImageResource(R.drawable.ic_favorite_border_24dp);
+        }
     }
 
     @Override

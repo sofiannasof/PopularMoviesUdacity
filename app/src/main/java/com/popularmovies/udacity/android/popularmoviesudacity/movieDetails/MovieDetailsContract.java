@@ -22,6 +22,8 @@ public class MovieDetailsContract {
         void showError(String message);
 
         void showComplete();
+
+        void setIconFavorite(Boolean isFavorite);
     }
 
     public interface Presenter extends BasePresenter {
@@ -30,5 +32,7 @@ public class MovieDetailsContract {
         void loadReview(int page, String id);
 
         void loadVideo(int page, String id);
+
+        void saveOrRemoveFavorite();
     }
 }

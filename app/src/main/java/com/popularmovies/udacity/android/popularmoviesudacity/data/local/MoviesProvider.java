@@ -8,6 +8,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 /**
  * Created by smenesid on 13-Feb-17.
@@ -66,6 +67,9 @@ public class MoviesProvider extends ContentProvider {
                 throw new UnsupportedOperationException("Unknown Uri " + uri);
         }
         retCursor.setNotificationUri(getContext().getContentResolver(), uri);
+
+        Log.e("PROVIDER COUNT", Integer.toString(retCursor.getCount()));
+
         return retCursor;
     }
 

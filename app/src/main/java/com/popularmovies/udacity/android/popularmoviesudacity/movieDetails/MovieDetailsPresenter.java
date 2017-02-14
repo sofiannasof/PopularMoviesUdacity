@@ -24,6 +24,7 @@ public class MovieDetailsPresenter implements MovieDetailsContract.Presenter {
     private Subscription subscription;
     private AppRemoteDataStore appRemoteDataStore;
     private MovieDetailsContract.View view;
+    private Boolean mIsFavorite = false;
 
     public MovieDetailsPresenter(AppRemoteDataStore appRemoteDataStore,
                                  MovieDetailsContract.View view) {
@@ -99,6 +100,22 @@ public class MovieDetailsPresenter implements MovieDetailsContract.Presenter {
                         view.showVideos(videos);
                     }
                 });
+    }
+
+    @Override
+    public void saveOrRemoveFavorite() {
+        //mIsFavorite = mMovieRepository.isFavorite(mMovie.id);
+        Log.d("HERE", "HERE");
+
+        if (mIsFavorite) {
+            //mMovieRepository.removeFavorite(mMovie.id);
+            view.setIconFavorite(false);
+            Log.d("HERE1", "false");
+        } else {
+            //mMovieRepository.insertFavorite(mMovie);
+            view.setIconFavorite(true);
+            Log.d("HERE1", "true");
+        }
     }
 
     @Override
