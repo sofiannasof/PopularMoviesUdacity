@@ -3,9 +3,11 @@
     <string-array name="orderBy">
         <item name="1">@string/pref_popular</item>
         <item name="2">@string/pref_top_rated</item>
+        <item name="3">@string/pref_fav</item>
     </string-array>
     <string-array name="orderByValues">
         <item name="1">popular</item>
         <item name="2">top_rated</item>
+        <item name="3">fav</item>
     </string-array>
 </resources>
