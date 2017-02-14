@@ -43,6 +43,7 @@ public class MovieDetailsActivity extends AppCompatActivity
     TextView plot;
     TextView rating;
     ImageView thumb;
+    ImageView backdrop;
     CardView cardMovieReviews;
     CardView cardMovieVideos;
     private MovieResults mMovie;
@@ -84,6 +85,14 @@ public class MovieDetailsActivity extends AppCompatActivity
                     .placeholder(R.drawable.ic_posterplaceholder)
                     .error(R.drawable.ic_errorplaceholder)
                     .into(thumb);
+            backdrop = (ImageView) findViewById(R.id.backdrop);
+            getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.color.transparent));
+
+            Picasso.with(getApplicationContext())
+                    .load(mMovie.getBackdrop_path())
+                    .placeholder(R.drawable.ic_posterplaceholder)
+                    .error(R.drawable.ic_errorplaceholder)
+                    .into(backdrop);
             id = Integer.toString(mMovie.getId());
 
             mRecyclerViewReviews = (RecyclerView) findViewById(R.id.recycler_view_reviews);

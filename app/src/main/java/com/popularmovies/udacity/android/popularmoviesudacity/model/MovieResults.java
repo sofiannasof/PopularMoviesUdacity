@@ -110,7 +110,7 @@ public class MovieResults {
     }
 
     public String getBackdrop_path() {
-        return backdrop_path;
+        return "http://image.tmdb.org/t/p/w780" + backdrop_path;
     }
 
     public void setBackdrop_path(String backdrop_path) {
