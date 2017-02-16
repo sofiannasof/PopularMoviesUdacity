@@ -13,7 +13,7 @@ public class DatabaseContract {
     public static final String CONTENT_AUTHORITY = "com.popularmovies.udacity.android.popularmoviesudacity";
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
 
-    public static final String PATH_MOVIES = "movies";
+    public static final String PATH_MOVIES = "fav_movies";
 
     public static final class Movies implements BaseColumns {
         public static final String CONTENT_URI_STRING = "content://" + CONTENT_AUTHORITY + "/" + PATH_MOVIES;
@@ -21,7 +21,7 @@ public class DatabaseContract {
                 .appendPath(PATH_MOVIES)
                 .build();
 
-        public static final String TABLE_NAME = "movies";
+        public static final String TABLE_NAME = "fav_movies";
 
         public static final String COLUMN_MOVIE_ID = "movie_id";
         public static final String COLUMN_TITLE = "movie_title";

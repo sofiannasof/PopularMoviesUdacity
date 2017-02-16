@@ -16,8 +16,8 @@ import android.util.Log;
 
 public class MoviesProvider extends ContentProvider {
 
-    static final int MOVIE = 100;
-    static final int MOVIE_LIST = 101;
+    static final int FAV_MOVIE_ID = 100;
+    static final int FAV_MOVIE_LIST = 101;
 
     private static final UriMatcher sUriMatcher = buildUriMatcher();
     private MoviesDdHelper mMoviesDBHelper;
@@ -25,8 +25,8 @@ public class MoviesProvider extends ContentProvider {
     static UriMatcher buildUriMatcher() {
         final String authority = DatabaseContract.CONTENT_AUTHORITY;
         UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-        uriMatcher.addURI(authority, DatabaseContract.PATH_MOVIES + "/#", MOVIE);
-        uriMatcher.addURI(authority, DatabaseContract.PATH_MOVIES, MOVIE_LIST);
+        uriMatcher.addURI(authority, DatabaseContract.PATH_MOVIES + "/#", FAV_MOVIE_ID);
+        uriMatcher.addURI(authority, DatabaseContract.PATH_MOVIES, FAV_MOVIE_LIST);
         return uriMatcher;
     }
 
@@ -41,7 +41,7 @@ public class MoviesProvider extends ContentProvider {
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         Cursor retCursor;
         switch (sUriMatcher.match(uri)) {
-            case MOVIE:
+            case FAV_MOVIE_ID:
                 retCursor = mMoviesDBHelper.getReadableDatabase().query(
                         DatabaseContract.Movies.TABLE_NAME,
                         projection,
@@ -52,7 +52,7 @@ public class MoviesProvider extends ContentProvider {
                         sortOrder
                 );
                 break;
-            case MOVIE_LIST:
+            case FAV_MOVIE_LIST:
                 retCursor = mMoviesDBHelper.getReadableDatabase().query(
                         DatabaseContract.Movies.TABLE_NAME,
                         projection,
@@ -85,7 +85,7 @@ public class MoviesProvider extends ContentProvider {
         final SQLiteDatabase db = mMoviesDBHelper.getWritableDatabase();
         Uri returnUri;
         switch (sUriMatcher.match(uri)) {
-            case MOVIE_LIST:
+            case FAV_MOVIE_LIST:
                 long _id = db.insert(DatabaseContract.Movies.TABLE_NAME, null, values);
                 if (_id > 0)
                     returnUri = DatabaseContract.Movies.buildUserUri(_id);
@@ -104,7 +104,7 @@ public class MoviesProvider extends ContentProvider {
         final SQLiteDatabase db = mMoviesDBHelper.getWritableDatabase();
         int rowsDeleted;
         switch (sUriMatcher.match(uri)) {
-            case MOVIE_LIST:
+            case FAV_MOVIE_LIST:
                 rowsDeleted = db.delete(DatabaseContract.Movies.TABLE_NAME, selection, selectionArgs);
                 break;
             default:
@@ -121,7 +121,7 @@ public class MoviesProvider extends ContentProvider {
         int update;
         switch (sUriMatcher.match(uri)) {
             //Case for User
-            case MOVIE_LIST:
+            case FAV_MOVIE_LIST:
                 update = db.update(DatabaseContract.Movies.TABLE_NAME, values, selection, selectionArgs);
                 break;
             default:

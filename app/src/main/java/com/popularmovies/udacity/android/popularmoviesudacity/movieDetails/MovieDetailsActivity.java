@@ -194,8 +194,10 @@ public class MovieDetailsActivity extends AppCompatActivity
     public void setIconFavorite(Boolean isFavorite) {
         if (isFavorite) {
             fab.setImageResource(R.drawable.ic_favorite_24dp);
+            //mMovie.setFavourite(false);
         } else {
             fab.setImageResource(R.drawable.ic_favorite_border_24dp);
+            //mMovie.setFavourite(true);
         }
     }
 
