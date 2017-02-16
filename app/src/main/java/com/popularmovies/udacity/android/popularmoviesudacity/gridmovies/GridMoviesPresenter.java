@@ -84,6 +84,30 @@ public class GridMoviesPresenter implements MoviesContract.Presenter {
                             view.showMovie(movie);
                         }
                     });
+        } else if (order.equals("fav")) {
+            //TODO:
+/*            subscription = appLocalDataStore.getMoviesFavorite()
+            .subscribeOn(Schedulers.newThread())
+			.observeOn(AndroidSchedulers.mainThread())
+			.subscribe(new Observer<Movie>() {
+				@Override
+				public void onCompleted() {
+					Log.d(LOG_TAG, "top_rated completed");
+					view.showComplete();
+				}
+
+				@Override
+				public void onError(Throwable e) {
+					Log.e(LOG_TAG, e.getMessage());
+					view.showError(e.toString());
+				}
+
+				@Override
+				public void onNext(Movie movie) {
+					Log.d(LOG_TAG, "top_rated transfer success");
+					view.showMovie(movie);
+				}
+			});*/
         }
     }
 

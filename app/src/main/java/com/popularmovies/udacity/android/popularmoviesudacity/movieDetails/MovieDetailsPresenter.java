@@ -104,7 +104,6 @@ public class MovieDetailsPresenter implements MovieDetailsContract.Presenter {
 
     @Override
     public void saveOrRemoveFavorite() {
-        //mIsFavorite = mMovieRepository.isFavorite(mMovie.id);
         mIsFavorite = !mIsFavorite;
         view.setIconFavorite(mIsFavorite);
     }

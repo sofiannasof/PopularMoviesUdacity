@@ -20,7 +20,7 @@ public class MoviesProvider extends ContentProvider {
     static final int MOVIE_LIST = 101;
 
     private static final UriMatcher sUriMatcher = buildUriMatcher();
-    private MoviesDbHelper mMoviesDBHelper;
+    private MoviesDdHelper mMoviesDBHelper;
 
     static UriMatcher buildUriMatcher() {
         final String authority = DatabaseContract.CONTENT_AUTHORITY;
@@ -32,7 +32,7 @@ public class MoviesProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
-        mMoviesDBHelper = new MoviesDbHelper(getContext());
+        mMoviesDBHelper = new MoviesDdHelper(getContext());
         return true;
     }
 

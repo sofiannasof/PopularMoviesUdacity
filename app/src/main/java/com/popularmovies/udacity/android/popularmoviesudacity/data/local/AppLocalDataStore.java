@@ -14,6 +14,7 @@ import com.popularmovies.udacity.android.popularmoviesudacity.model.Videos;
 import com.pushtorefresh.storio.contentresolver.ContentResolverTypeMapping;
 import com.pushtorefresh.storio.contentresolver.StorIOContentResolver;
 import com.pushtorefresh.storio.contentresolver.impl.DefaultStorIOContentResolver;
+import com.pushtorefresh.storio.contentresolver.queries.Query;
 
 import javax.inject.Inject;
 
@@ -60,7 +61,13 @@ public class AppLocalDataStore implements AppDataStore {
 
     @Override
     public Observable<Movie> getMoviesFavorite() {
-        return null;
+        return mStorIOContentResolver.get()
+                .object(Movie.class)
+                .withQuery(Query.builder()
+                        .uri(DatabaseContract.Movies.CONTENT_URI)
+                        .build())
+                .prepare()
+                .asRxObservable();
     }
 
     public void saveFieldsToDatabase(Movie movie) {
