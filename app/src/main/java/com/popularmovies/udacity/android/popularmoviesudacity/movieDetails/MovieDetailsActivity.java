@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 import com.popularmovies.udacity.android.popularmoviesudacity.R;
 import com.popularmovies.udacity.android.popularmoviesudacity.data.AppRemoteDataStore;
 import com.popularmovies.udacity.android.popularmoviesudacity.data.MovieApplication;
+import com.popularmovies.udacity.android.popularmoviesudacity.data.local.AppLocalDataStore;
 import com.popularmovies.udacity.android.popularmoviesudacity.model.MovieResults;
 import com.popularmovies.udacity.android.popularmoviesudacity.model.Review;
 import com.popularmovies.udacity.android.popularmoviesudacity.model.Videos;
@@ -38,6 +39,9 @@ public class MovieDetailsActivity extends AppCompatActivity
 
     @Inject
     AppRemoteDataStore appRemoteDataStore;
+    @Inject
+    AppLocalDataStore appLocalDataStore;
+
     Gson gson = new Gson();
     TextView originalTitle;
     TextView releaseDate;
@@ -194,11 +198,12 @@ public class MovieDetailsActivity extends AppCompatActivity
     public void setIconFavorite(Boolean isFavorite) {
         if (isFavorite) {
             fab.setImageResource(R.drawable.ic_favorite_24dp);
-            //mMovie.setFavourite(false);
+            appLocalDataStore.saveFieldsToDatabase(mMovie);
         } else {
             fab.setImageResource(R.drawable.ic_favorite_border_24dp);
-            //mMovie.setFavourite(true);
         }
+        mMovie.setFavourite(!isFavorite);
+
     }
 
     @Override

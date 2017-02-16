@@ -45,6 +45,16 @@ public class MovieResults {
     @SerializedName("vote_average")
     public double vote_average;
 
+    public Boolean isFavourite = false;
+
+    public Boolean isFavourite() {
+        return isFavourite;
+    }
+
+    public void setFavourite(Boolean favourite) {
+        isFavourite = favourite;
+    }
+
     public String getPoster_path() {
         return "http://image.tmdb.org/t/p/w185" + poster_path;
     }

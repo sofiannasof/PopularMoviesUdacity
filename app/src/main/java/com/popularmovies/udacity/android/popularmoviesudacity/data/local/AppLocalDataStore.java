@@ -73,4 +73,8 @@ public class AppLocalDataStore implements AppDataStore {
     public void saveFieldsToDatabase(Movie movie) {
         mStorIOContentResolver.put().objects(movie.getResults()).prepare().executeAsBlocking();
     }
+
+    public void saveFieldsToDatabase(MovieResults results) {
+        mStorIOContentResolver.put().object(results).prepare().executeAsBlocking();
+    }
 }
