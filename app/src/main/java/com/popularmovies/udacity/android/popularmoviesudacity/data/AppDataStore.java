@@ -19,4 +19,6 @@ public interface AppDataStore {
     Observable<Videos> getMovieTrailer(String id, String api_key, int page);
 
     Observable<Review> getMovieReviews(String id, String api_key, int page);
+
+    Observable<Movie> getMoviesFavorite();
 }

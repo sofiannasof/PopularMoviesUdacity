@@ -58,6 +58,11 @@ public class AppLocalDataStore implements AppDataStore {
         return null;
     }
 
+    @Override
+    public Observable<Movie> getMoviesFavorite() {
+        return null;
+    }
+
     public void saveFieldsToDatabase(Movie movie) {
         mStorIOContentResolver.put().objects(movie.getResults()).prepare().executeAsBlocking();
     }

@@ -87,5 +87,10 @@ public class AppRemoteDataStore implements AppDataStore {
         }
         return call;
     }
+
+    @Override
+    public Observable<Movie> getMoviesFavorite() {
+        return null;
+    }
 }
 
