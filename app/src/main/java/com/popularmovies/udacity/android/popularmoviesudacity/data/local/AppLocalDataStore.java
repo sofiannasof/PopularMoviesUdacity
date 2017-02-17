@@ -2,6 +2,7 @@ package com.popularmovies.udacity.android.popularmoviesudacity.data.local;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.popularmovies.udacity.android.popularmoviesudacity.data.AppDataStore;
 import com.popularmovies.udacity.android.popularmoviesudacity.model.Movie;
@@ -70,11 +71,35 @@ public class AppLocalDataStore implements AppDataStore {
                 .asRxObservable();
     }
 
-    public void saveFieldsToDatabase(Movie movie) {
-        mStorIOContentResolver.put().objects(movie.getResults()).prepare().executeAsBlocking();
+    public void saveFieldsToDatabase(MovieResults results) {
+        mStorIOContentResolver.put()
+                .object(results)
+                .prepare()
+                .executeAsBlocking();
     }
 
-    public void saveFieldsToDatabase(MovieResults results) {
-        mStorIOContentResolver.put().object(results).prepare().executeAsBlocking();
+    public void deleteFieldsFromDatabase(MovieResults results) {
+        mStorIOContentResolver.delete()
+                .object(results)
+                .prepare()
+                .executeAsBlocking();
+    }
+
+    public boolean isFavorite(MovieResults results) {
+        boolean favorite = false;
+
+        MovieResults mResult = mStorIOContentResolver.get()
+                .object(MovieResults.class)
+                .withQuery(com.pushtorefresh.storio.contentresolver.queries.Query.builder()
+                        .uri(DatabaseContract.Movies.CONTENT_URI)
+                        .where(DatabaseContract.Movies.COLUMN_MOVIE_ID + " = ? ")
+                        .whereArgs(results.getId()).build()
+                ).prepare().executeAsBlocking();
+
+        if (mResult != null)
+            favorite = true;
+
+        Log.e("isFavorite", Boolean.toString(favorite));
+        return favorite;
     }
 }
