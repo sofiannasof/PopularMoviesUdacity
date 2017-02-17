@@ -24,7 +24,6 @@ public class MovieDetailsPresenter implements MovieDetailsContract.Presenter {
     private Subscription subscription;
     private AppRemoteDataStore appRemoteDataStore;
     private MovieDetailsContract.View view;
-    private Boolean mIsFavorite = false;
 
     public MovieDetailsPresenter(AppRemoteDataStore appRemoteDataStore,
                                  MovieDetailsContract.View view) {
@@ -104,8 +103,7 @@ public class MovieDetailsPresenter implements MovieDetailsContract.Presenter {
 
     @Override
     public void saveOrRemoveFavorite() {
-        mIsFavorite = !mIsFavorite;
-        view.setIconFavorite(mIsFavorite);
+        view.setIconFavorite();
     }
 
     @Override

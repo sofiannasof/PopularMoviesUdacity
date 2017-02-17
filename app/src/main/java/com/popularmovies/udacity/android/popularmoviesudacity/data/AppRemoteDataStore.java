@@ -41,7 +41,7 @@ public class AppRemoteDataStore implements AppDataStore {
             MovieService apiService = retrofit.create(MovieService.class);
 
             call = apiService.getMoviesPopular(apiKey, page)
-                    .doOnNext(movies -> appLocalDataStore.saveFieldsToDatabase(movies));
+            ;//.doOnNext(movies -> appLocalDataStore.saveFieldsToDatabase(movies));
         }
         return call;
     }
@@ -55,7 +55,7 @@ public class AppRemoteDataStore implements AppDataStore {
             MovieService apiService = retrofit.create(MovieService.class);
 
             call = apiService.getMoviesTopRated(apiKey, page)
-                    .doOnNext(movies -> appLocalDataStore.saveFieldsToDatabase(movies));
+            ;//.doOnNext(movies -> appLocalDataStore.saveFieldsToDatabase(movies));
         }
         return call;
     }

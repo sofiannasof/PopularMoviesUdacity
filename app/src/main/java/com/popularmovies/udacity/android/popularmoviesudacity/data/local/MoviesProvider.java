@@ -25,8 +25,8 @@ public class MoviesProvider extends ContentProvider {
     static UriMatcher buildUriMatcher() {
         final String authority = DatabaseContract.CONTENT_AUTHORITY;
         UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-        uriMatcher.addURI(authority, DatabaseContract.PATH_MOVIES + "/#", FAV_MOVIE_ID);
-        uriMatcher.addURI(authority, DatabaseContract.PATH_MOVIES, FAV_MOVIE_LIST);
+        uriMatcher.addURI(authority, DatabaseContract.PATH_FAV_MOVIES + "/#", FAV_MOVIE_ID);
+        uriMatcher.addURI(authority, DatabaseContract.PATH_FAV_MOVIES, FAV_MOVIE_LIST);
         return uriMatcher;
     }
 
@@ -51,6 +51,8 @@ public class MoviesProvider extends ContentProvider {
                         null,
                         sortOrder
                 );
+                Log.e("PROVIDER ", "FAV_MOVIE_ID");
+
                 break;
             case FAV_MOVIE_LIST:
                 retCursor = mMoviesDBHelper.getReadableDatabase().query(
@@ -62,6 +64,8 @@ public class MoviesProvider extends ContentProvider {
                         null,
                         sortOrder
                 );
+                Log.e("PROVIDER ", "FAV_MOVIE_LIST");
+
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown Uri " + uri);
@@ -95,6 +99,8 @@ public class MoviesProvider extends ContentProvider {
             default:
                 throw new UnsupportedOperationException("Unknown URI " + uri);
         }
+        Log.e("PROVIDER ", "insert");
+
         getContext().getContentResolver().notifyChange(uri, null);
         return returnUri;
     }
@@ -112,6 +118,9 @@ public class MoviesProvider extends ContentProvider {
         }
         if (selection == null || 0 != rowsDeleted)
             getContext().getContentResolver().notifyChange(uri, null);
+
+        Log.e("PROVIDER ", "deleted rows" + rowsDeleted);
+
         return rowsDeleted;
     }
 

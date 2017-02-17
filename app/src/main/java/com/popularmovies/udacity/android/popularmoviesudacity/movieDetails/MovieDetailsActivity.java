@@ -1,6 +1,8 @@
 package com.popularmovies.udacity.android.popularmoviesudacity.movieDetails;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +10,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,6 +21,7 @@ import com.popularmovies.udacity.android.popularmoviesudacity.R;
 import com.popularmovies.udacity.android.popularmoviesudacity.data.AppRemoteDataStore;
 import com.popularmovies.udacity.android.popularmoviesudacity.data.MovieApplication;
 import com.popularmovies.udacity.android.popularmoviesudacity.data.local.AppLocalDataStore;
+import com.popularmovies.udacity.android.popularmoviesudacity.data.local.DatabaseContract;
 import com.popularmovies.udacity.android.popularmoviesudacity.model.MovieResults;
 import com.popularmovies.udacity.android.popularmoviesudacity.model.Review;
 import com.popularmovies.udacity.android.popularmoviesudacity.model.Videos;
@@ -125,6 +129,7 @@ public class MovieDetailsActivity extends AppCompatActivity
             fetchMovie();
             fetchReviews();
             fetchVideos();
+            fetchFav();
         }
     }
 
@@ -149,6 +154,14 @@ public class MovieDetailsActivity extends AppCompatActivity
             Toast.makeText(this, R.string.message_no_network_connection, Toast.LENGTH_SHORT).show();
         } else {
             mPresenter.loadVideo(1, id);
+        }
+    }
+
+    private void fetchFav() {
+        if (isFavorite(mMovie)) {
+            fab.setImageResource(R.drawable.ic_favorite_24dp);
+        } else {
+            fab.setImageResource(R.drawable.ic_favorite_border_24dp);
         }
     }
 
@@ -195,15 +208,49 @@ public class MovieDetailsActivity extends AppCompatActivity
     }
 
     @Override
-    public void setIconFavorite(Boolean isFavorite) {
-        if (isFavorite) {
+    public void setIconFavorite() {
+        if (!isFavorite(mMovie)) {
             fab.setImageResource(R.drawable.ic_favorite_24dp);
-            appLocalDataStore.saveFieldsToDatabase(mMovie);
+            //appLocalDataStore.saveFieldsToDatabase(mMovie);
+            getBaseContext().getContentResolver().insert(DatabaseContract.Movies.CONTENT_URI,
+                    addMoviesToFavorite(mMovie.getId(), mMovie.getTitle()));
         } else {
             fab.setImageResource(R.drawable.ic_favorite_border_24dp);
+            removeFromFavorites(mMovie);
         }
-        mMovie.setFavourite(!isFavorite);
+    }
 
+    //TODO: Move to FavService
+    private ContentValues addMoviesToFavorite(int id, String title) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DatabaseContract.Movies.COLUMN_MOVIE_ID, id);
+        contentValues.put(DatabaseContract.Movies.COLUMN_TITLE, title);
+        return contentValues;
+    }
+
+    public void removeFromFavorites(MovieResults movie) {
+        getBaseContext().getContentResolver().delete(
+                DatabaseContract.Movies.CONTENT_URI,
+                DatabaseContract.Movies.COLUMN_MOVIE_ID + " = " + movie.getId(),
+                null
+        );
+    }
+
+    public boolean isFavorite(MovieResults movie) {
+        boolean favorite = false;
+        Cursor cursor = getBaseContext().getContentResolver().query(
+                DatabaseContract.Movies.CONTENT_URI,
+                null,
+                DatabaseContract.Movies.COLUMN_MOVIE_ID + " = " + movie.getId(),
+                null,
+                null
+        );
+        if (cursor != null) {
+            favorite = cursor.getCount() != 0;
+            cursor.close();
+        }
+        Log.e("isFavorite", Boolean.toString(favorite));
+        return favorite;
     }
 
     @Override

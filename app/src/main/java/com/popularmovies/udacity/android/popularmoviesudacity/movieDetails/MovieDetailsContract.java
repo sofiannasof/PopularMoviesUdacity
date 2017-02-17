@@ -23,7 +23,7 @@ public class MovieDetailsContract {
 
         void showComplete();
 
-        void setIconFavorite(Boolean isFavorite);
+        void setIconFavorite();
     }
 
     public interface Presenter extends BasePresenter {
