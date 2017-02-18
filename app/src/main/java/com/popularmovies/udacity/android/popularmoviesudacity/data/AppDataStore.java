@@ -1,8 +1,11 @@
 package com.popularmovies.udacity.android.popularmoviesudacity.data;
 
 import com.popularmovies.udacity.android.popularmoviesudacity.model.Movie;
+import com.popularmovies.udacity.android.popularmoviesudacity.model.MovieResults;
 import com.popularmovies.udacity.android.popularmoviesudacity.model.Review;
 import com.popularmovies.udacity.android.popularmoviesudacity.model.Videos;
+
+import java.util.List;
 
 import rx.Observable;
 
@@ -20,5 +23,5 @@ public interface AppDataStore {
 
     Observable<Review> getMovieReviews(String id, String api_key, int page);
 
-    Observable<Movie> getMoviesFavorite();
+    Observable<List<MovieResults>> getMoviesFavorite();
 }

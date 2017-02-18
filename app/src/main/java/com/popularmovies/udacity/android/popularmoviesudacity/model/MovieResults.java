@@ -18,6 +18,8 @@ public class MovieResults {
     public String poster_path;
     @SerializedName("adult")
     public boolean adult;
+    @StorIOSQLiteColumn(name = DatabaseContract.Movies.COLUMN_OVERVIEW)
+    @StorIOContentResolverColumn(name = DatabaseContract.Movies.COLUMN_OVERVIEW)
     @SerializedName("overview")
     public String overview;
     @SerializedName("release_date")
@@ -26,6 +28,8 @@ public class MovieResults {
     @StorIOContentResolverColumn(name = DatabaseContract.Movies.COLUMN_MOVIE_ID, key = true)
     @SerializedName("id")
     public int id;
+    @StorIOSQLiteColumn(name = DatabaseContract.Movies.COLUMN_ORIGINAL_TITLE)
+    @StorIOContentResolverColumn(name = DatabaseContract.Movies.COLUMN_ORIGINAL_TITLE)
     @SerializedName("original_title")
     public String original_title;
     @SerializedName("original_language")

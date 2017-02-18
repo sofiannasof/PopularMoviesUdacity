@@ -17,6 +17,8 @@ import com.pushtorefresh.storio.contentresolver.StorIOContentResolver;
 import com.pushtorefresh.storio.contentresolver.impl.DefaultStorIOContentResolver;
 import com.pushtorefresh.storio.contentresolver.queries.Query;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import rx.Observable;
@@ -61,14 +63,15 @@ public class AppLocalDataStore implements AppDataStore {
     }
 
     @Override
-    public Observable<Movie> getMoviesFavorite() {
+    public Observable<List<MovieResults>> getMoviesFavorite() {
         return mStorIOContentResolver.get()
-                .object(Movie.class)
+                .listOfObjects(MovieResults.class)
                 .withQuery(Query.builder()
                         .uri(DatabaseContract.Movies.CONTENT_URI)
                         .build())
                 .prepare()
-                .asRxObservable();
+                .asRxObservable()
+                .take(1);
     }
 
     public void saveFieldsToDatabase(MovieResults results) {
@@ -90,7 +93,7 @@ public class AppLocalDataStore implements AppDataStore {
 
         MovieResults mResult = mStorIOContentResolver.get()
                 .object(MovieResults.class)
-                .withQuery(com.pushtorefresh.storio.contentresolver.queries.Query.builder()
+                .withQuery(Query.builder()
                         .uri(DatabaseContract.Movies.CONTENT_URI)
                         .where(DatabaseContract.Movies.COLUMN_MOVIE_ID + " = ? ")
                         .whereArgs(results.getId()).build()

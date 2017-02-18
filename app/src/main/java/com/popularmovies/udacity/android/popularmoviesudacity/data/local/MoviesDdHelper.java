@@ -23,9 +23,10 @@ public class MoviesDdHelper extends SQLiteOpenHelper {
         final String SQL_CREATE_MOVIES_TABLE =
                 "CREATE TABLE " + DatabaseContract.Movies.TABLE_NAME + " (" +
                         DatabaseContract.Movies.COLUMN_MOVIE_ID + " INTEGER NOT NULL, " +
-                        DatabaseContract.Movies.COLUMN_TITLE + " TEXT , " +
-                /*       DatabaseContract.Movies.COLUMN_OVERVIEW + " TEXT NOT NULL, " +
-                        DatabaseContract.Movies.COLUMN_RELEASE_DATE + " TEXT NOT NULL, " +
+                        DatabaseContract.Movies.COLUMN_TITLE + " TEXT NOT NULL, " +
+                        DatabaseContract.Movies.COLUMN_ORIGINAL_TITLE + " TEXT NOT NULL, " +
+                        DatabaseContract.Movies.COLUMN_OVERVIEW + " TEXT NOT NULL, " +
+                /*        DatabaseContract.Movies.COLUMN_RELEASE_DATE + " TEXT NOT NULL, " +
                         DatabaseContract.Movies.COLUMN_LANGUAGE + " TEXT NOT NULL, " +
                         DatabaseContract.Movies.COLUMN_VOTE_COUNT + " INTEGER NOT NULL, " +
                         DatabaseContract.Movies.COLUMN_VOTE_AVERAGE + " REAL NOT NULL, " +*/

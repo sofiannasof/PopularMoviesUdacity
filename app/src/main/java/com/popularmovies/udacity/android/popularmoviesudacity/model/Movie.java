@@ -19,6 +19,13 @@ public class Movie {
     @SerializedName("total_pages")
     public int total_pages;
 
+    public Movie(List<MovieResults> results, int total_results) {
+        this.page = 1;
+        this.results = results;
+        this.total_results = total_results;
+        total_pages = 1;
+    }
+
     public int getPage() {
         return page;
     }

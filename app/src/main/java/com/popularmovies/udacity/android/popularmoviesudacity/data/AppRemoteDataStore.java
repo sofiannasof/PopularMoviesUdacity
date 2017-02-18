@@ -5,8 +5,11 @@ import android.util.Log;
 import com.popularmovies.udacity.android.popularmoviesudacity.api.MovieService;
 import com.popularmovies.udacity.android.popularmoviesudacity.data.local.AppLocalDataStore;
 import com.popularmovies.udacity.android.popularmoviesudacity.model.Movie;
+import com.popularmovies.udacity.android.popularmoviesudacity.model.MovieResults;
 import com.popularmovies.udacity.android.popularmoviesudacity.model.Review;
 import com.popularmovies.udacity.android.popularmoviesudacity.model.Videos;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -41,7 +44,7 @@ public class AppRemoteDataStore implements AppDataStore {
             MovieService apiService = retrofit.create(MovieService.class);
 
             call = apiService.getMoviesPopular(apiKey, page)
-            ;//.doOnNext(movies -> appLocalDataStore.saveFieldsToDatabase(movies));
+            ;
         }
         return call;
     }
@@ -55,7 +58,7 @@ public class AppRemoteDataStore implements AppDataStore {
             MovieService apiService = retrofit.create(MovieService.class);
 
             call = apiService.getMoviesTopRated(apiKey, page)
-            ;//.doOnNext(movies -> appLocalDataStore.saveFieldsToDatabase(movies));
+            ;
         }
         return call;
     }
@@ -89,7 +92,7 @@ public class AppRemoteDataStore implements AppDataStore {
     }
 
     @Override
-    public Observable<Movie> getMoviesFavorite() {
+    public Observable<List<MovieResults>> getMoviesFavorite() {
         return null;
     }
 }

@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.popularmovies.udacity.android.popularmoviesudacity.R;
 import com.popularmovies.udacity.android.popularmoviesudacity.data.AppRemoteDataStore;
 import com.popularmovies.udacity.android.popularmoviesudacity.data.MovieApplication;
+import com.popularmovies.udacity.android.popularmoviesudacity.data.local.AppLocalDataStore;
 import com.popularmovies.udacity.android.popularmoviesudacity.gridMovies.adapter.MoviesAdapter;
 import com.popularmovies.udacity.android.popularmoviesudacity.model.Movie;
 import com.popularmovies.udacity.android.popularmoviesudacity.settings.MyPreferences;
@@ -41,6 +42,9 @@ public class GridMoviesActivity extends AppCompatActivity
 
     @Inject
     AppRemoteDataStore appRemoteDataStore;
+
+    @Inject
+    AppLocalDataStore appLocalDataStore;
 
     private Movie movie;
     private MoviesContract.Presenter mPresenter;
@@ -66,7 +70,7 @@ public class GridMoviesActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         MovieApplication.getAppComponent().inject(this);
-        new GridMoviesPresenter(appRemoteDataStore, this);
+        new GridMoviesPresenter(appRemoteDataStore, appLocalDataStore, getBaseContext(), this);
 
         refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh);
         refreshLayout.setOnRefreshListener(() -> refresh());

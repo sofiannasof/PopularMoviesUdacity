@@ -1,10 +1,15 @@
 package com.popularmovies.udacity.android.popularmoviesudacity.gridMovies;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.popularmovies.udacity.android.popularmoviesudacity.BuildConfig;
 import com.popularmovies.udacity.android.popularmoviesudacity.data.AppRemoteDataStore;
+import com.popularmovies.udacity.android.popularmoviesudacity.data.local.AppLocalDataStore;
 import com.popularmovies.udacity.android.popularmoviesudacity.model.Movie;
+import com.popularmovies.udacity.android.popularmoviesudacity.model.MovieResults;
+
+import java.util.List;
 
 import rx.Observer;
 import rx.Subscription;
@@ -21,11 +26,17 @@ public class GridMoviesPresenter implements MoviesContract.Presenter {
 
     private Subscription subscription;
     private AppRemoteDataStore appRemoteDataStore;
+    private AppLocalDataStore appLocalDataStore;
     private MoviesContract.View view;
+    private Context ctx;
 
     public GridMoviesPresenter(AppRemoteDataStore appRemoteDataStore,
+                               AppLocalDataStore appLocalDataStore,
+                               Context ctx,
                                MoviesContract.View view) {
         this.appRemoteDataStore = appRemoteDataStore;
+        this.appLocalDataStore = appLocalDataStore;
+        this.ctx = ctx;
         this.view = view;
         view.setPresenter(this);
     }
@@ -86,14 +97,19 @@ public class GridMoviesPresenter implements MoviesContract.Presenter {
                     });
         } else if (order.equals("fav")) {
             //TODO:
-/*            subscription = appLocalDataStore.getMoviesFavorite()
+
+            if (appLocalDataStore == null) {
+                appLocalDataStore = new AppLocalDataStore(ctx);
+            }
+
+            subscription = appLocalDataStore.getMoviesFavorite()
             .subscribeOn(Schedulers.newThread())
 			.observeOn(AndroidSchedulers.mainThread())
-			.subscribe(new Observer<Movie>() {
-				@Override
+                    .subscribe(new Observer<List<MovieResults>>() {
+                        @Override
 				public void onCompleted() {
-					Log.d(LOG_TAG, "top_rated completed");
-					view.showComplete();
+                    Log.d(LOG_TAG, "fav completed");
+                            view.showComplete();
 				}
 
 				@Override
@@ -103,11 +119,13 @@ public class GridMoviesPresenter implements MoviesContract.Presenter {
 				}
 
 				@Override
-				public void onNext(Movie movie) {
-					Log.d(LOG_TAG, "top_rated transfer success");
-					view.showMovie(movie);
-				}
-			});*/
+                public void onNext(List<MovieResults> results) {
+                    Log.d(LOG_TAG, "fav transfer success");
+                    Movie movie = new Movie(results, results.size());
+                    view.showMovie(movie);
+                }
+                    });
+
         }
     }
 
