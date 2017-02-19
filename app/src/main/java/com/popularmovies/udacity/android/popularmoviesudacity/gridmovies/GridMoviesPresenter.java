@@ -96,7 +96,6 @@ public class GridMoviesPresenter implements MoviesContract.Presenter {
                         }
                     });
         } else if (order.equals("fav")) {
-            //TODO:
 
             if (appLocalDataStore == null) {
                 appLocalDataStore = new AppLocalDataStore(ctx);

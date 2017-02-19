@@ -27,10 +27,13 @@ public class DatabaseContract {
         public static final String COLUMN_TITLE = "movie_title";
         public static final String COLUMN_ORIGINAL_TITLE = "movie_original_title";
         public static final String COLUMN_OVERVIEW = "movie_overview";
-        public static final String COLUMN_VOTE_COUNT = "movie_vote_count";
-        public static final String COLUMN_RELEASE_DATE = "movie_release_date";
-        public static final String COLUMN_LANGUAGE = "movie_language";
+        public static final String COLUMN_POSTER_PATH = "movie_backdrop_path";
+        public static final String COLUMN_BACKDROP_PATH = "movie_poster_path";
         public static final String COLUMN_VOTE_AVERAGE = "movie_vote_avg";
+        public static final String COLUMN_RELEASE_DATE = "movie_release_date";
+
+        public static final String COLUMN_VOTE_COUNT = "movie_vote_count";
+        public static final String COLUMN_LANGUAGE = "movie_language";
 
         public static Uri buildMovieUri(int movieId) {
             return ContentUris.withAppendedId(CONTENT_URI, movieId);

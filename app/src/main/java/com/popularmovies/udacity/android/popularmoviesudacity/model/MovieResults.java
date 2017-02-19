@@ -14,6 +14,8 @@ import com.pushtorefresh.storio.sqlite.annotations.StorIOSQLiteType;
 @StorIOContentResolverType(uri = DatabaseContract.Movies.CONTENT_URI_STRING)
 public class MovieResults {
 
+    @StorIOSQLiteColumn(name = DatabaseContract.Movies.COLUMN_POSTER_PATH)
+    @StorIOContentResolverColumn(name = DatabaseContract.Movies.COLUMN_POSTER_PATH)
     @SerializedName("poster_path")
     public String poster_path;
     @SerializedName("adult")
@@ -22,6 +24,8 @@ public class MovieResults {
     @StorIOContentResolverColumn(name = DatabaseContract.Movies.COLUMN_OVERVIEW)
     @SerializedName("overview")
     public String overview;
+    @StorIOSQLiteColumn(name = DatabaseContract.Movies.COLUMN_RELEASE_DATE)
+    @StorIOContentResolverColumn(name = DatabaseContract.Movies.COLUMN_RELEASE_DATE)
     @SerializedName("release_date")
     public String release_date;
     @StorIOSQLiteColumn(name = DatabaseContract.Movies.COLUMN_MOVIE_ID, key = true)
@@ -38,6 +42,8 @@ public class MovieResults {
     @StorIOContentResolverColumn(name = DatabaseContract.Movies.COLUMN_TITLE)
     @SerializedName("title")
     public String title;
+    @StorIOSQLiteColumn(name = DatabaseContract.Movies.COLUMN_BACKDROP_PATH)
+    @StorIOContentResolverColumn(name = DatabaseContract.Movies.COLUMN_BACKDROP_PATH)
     @SerializedName("backdrop_path")
     public String backdrop_path;
     @SerializedName("popularity")
@@ -46,6 +52,8 @@ public class MovieResults {
     public int vote_count;
     @SerializedName("video")
     public boolean video;
+    @StorIOSQLiteColumn(name = DatabaseContract.Movies.COLUMN_VOTE_AVERAGE)
+    @StorIOContentResolverColumn(name = DatabaseContract.Movies.COLUMN_VOTE_AVERAGE)
     @SerializedName("vote_average")
     public double vote_average;
 

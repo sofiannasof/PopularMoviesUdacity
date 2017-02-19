@@ -26,10 +26,13 @@ public class MoviesDdHelper extends SQLiteOpenHelper {
                         DatabaseContract.Movies.COLUMN_TITLE + " TEXT NOT NULL, " +
                         DatabaseContract.Movies.COLUMN_ORIGINAL_TITLE + " TEXT NOT NULL, " +
                         DatabaseContract.Movies.COLUMN_OVERVIEW + " TEXT NOT NULL, " +
-                /*        DatabaseContract.Movies.COLUMN_RELEASE_DATE + " TEXT NOT NULL, " +
-                        DatabaseContract.Movies.COLUMN_LANGUAGE + " TEXT NOT NULL, " +
-                        DatabaseContract.Movies.COLUMN_VOTE_COUNT + " INTEGER NOT NULL, " +
-                        DatabaseContract.Movies.COLUMN_VOTE_AVERAGE + " REAL NOT NULL, " +*/
+                        DatabaseContract.Movies.COLUMN_BACKDROP_PATH + " TEXT NOT NULL, " +
+                        DatabaseContract.Movies.COLUMN_POSTER_PATH + " TEXT NOT NULL, " +
+                        DatabaseContract.Movies.COLUMN_VOTE_AVERAGE + " REAL NOT NULL, " +
+                        DatabaseContract.Movies.COLUMN_RELEASE_DATE + " TEXT NOT NULL, " +
+
+                        /*DatabaseContract.Movies.COLUMN_LANGUAGE + " TEXT NOT NULL, " +
+                        DatabaseContract.Movies.COLUMN_VOTE_COUNT + " INTEGER NOT NULL, " */
                         "UNIQUE ( " + DatabaseContract.Movies.COLUMN_MOVIE_ID + " ) ON CONFLICT REPLACE )";
 
         db.execSQL(SQL_CREATE_MOVIES_TABLE);
