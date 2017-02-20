@@ -95,7 +95,7 @@ public class GridMoviesPresenter implements MoviesContract.Presenter {
                             view.showMovie(movie);
                         }
                     });
-        } else if (order.equals("fav")) {
+        } else if (order.equals("fav") & page == 1) {
 
             if (appLocalDataStore == null) {
                 appLocalDataStore = new AppLocalDataStore(ctx);

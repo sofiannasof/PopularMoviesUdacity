@@ -23,7 +23,7 @@ public class Movie {
         this.page = 1;
         this.results = results;
         this.total_results = total_results;
-        total_pages = 1;
+        this.total_pages = 1;
     }
 
     public int getPage() {
