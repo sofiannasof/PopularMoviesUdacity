@@ -2,12 +2,15 @@ package com.popularmovies.udacity.android.popularmoviesudacity.movieDetails;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -51,6 +54,8 @@ public class MovieDetailsActivity extends AppCompatActivity
     ImageView backdrop;
     CardView cardMovieReviews;
     CardView cardMovieVideos;
+    Toolbar toolbar;
+    CollapsingToolbarLayout collapsingToolbarLayout;
     private MovieResults mMovie;
     private MovieDetailsContract.Presenter mPresenter;
     private String id;
@@ -92,7 +97,14 @@ public class MovieDetailsActivity extends AppCompatActivity
                     .error(R.drawable.ic_errorplaceholder)
                     .into(thumb);
             backdrop = (ImageView) findViewById(R.id.backdrop);
-            getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.color.transparent));
+            toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+            setSupportActionBar(toolbar);
+            if (getSupportActionBar() != null) {
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                getSupportActionBar().setDisplayShowHomeEnabled(true);
+                toolbar.setNavigationOnClickListener(view -> onBackPressed());
+            }
 
             Picasso.with(getApplicationContext())
                     .load(mMovie.getBackdrop_path())
@@ -121,6 +133,11 @@ public class MovieDetailsActivity extends AppCompatActivity
             mRecyclerViewVideos.setAdapter(mVideosAdapter);
             fab = (FloatingActionButton) findViewById(R.id.fab);
             fab.setOnClickListener(v -> mPresenter.saveOrRemoveFavorite());
+
+            collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout);
+            collapsingToolbarLayout.setTitle(mMovie.getTitle());
+            collapsingToolbarLayout.setExpandedTitleColor(ContextCompat.getColor(this, android.R.color.transparent));
+            setTitle("");
 
             fetchMovie();
             fetchReviews();
