@@ -61,25 +61,12 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ItemViewHo
     @Override
     public void onBindViewHolder(ItemViewHolder itemViewHolder, int i) {
         final MovieResults movie = mMovies.get(i);
-        if (canLoadMoreMovies(i)) {
-            if (mLoadListener != null) {
-                mLoadListener.onLoadMoreData();
-                mLastMoviesCount = mMovies.size();
-                mLoading = true;
-            }
-        } else {
-            Picasso.with(mContext).load(movie.getPoster_path())
-                    .placeholder(R.drawable.ic_posterplaceholder)
-                    .error(R.drawable.ic_errorplaceholder)
-                    .into(itemViewHolder.imageView);
-            itemViewHolder.itemView.setOnClickListener(v ->
-                    startMovieDetailsActivity(mMovies.get(i)));
-        }
-    }
-
-    private boolean canLoadMoreMovies(int currentPosition) {
-        return !mLoading && currentPosition == mMovies.size() - 1 &&
-                mLastMoviesCount != mMovies.size();
+        Picasso.with(mContext).load(movie.getPoster_path())
+                .placeholder(R.drawable.ic_posterplaceholder)
+                .error(R.drawable.ic_errorplaceholder)
+                .into(itemViewHolder.imageView);
+        itemViewHolder.itemView.setOnClickListener(v ->
+                startMovieDetailsActivity(movie));
     }
 
     @Override

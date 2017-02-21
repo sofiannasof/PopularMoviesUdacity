@@ -57,6 +57,7 @@ public class GridMoviesActivity extends AppCompatActivity
     private GridLayoutManager mLayoutManager;
     private int scrollPosition = 0;
     private RecyclerView mRecyclerView;
+    private EndlessRecyclerViewOnScrollListener endlessRecyclerViewOnScrollListener;
 
     public static int calculateNoOfColumns(Context context) {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
@@ -79,8 +80,6 @@ public class GridMoviesActivity extends AppCompatActivity
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         mHomeAdapter = new MoviesAdapter();
-        mHomeAdapter.setOnMovieClickedListener(() -> mRecyclerView.post(() -> onLoadMoreData()));
-
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new GridLayoutManager(this, calculateNoOfColumns(getApplicationContext()));
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -96,6 +95,14 @@ public class GridMoviesActivity extends AppCompatActivity
                 mLayoutManager.scrollToPosition(scrollPosition);
             }
         }
+
+        endlessRecyclerViewOnScrollListener = new EndlessRecyclerViewOnScrollListener(mLayoutManager) {
+            @Override
+            public void onLoadMore() {
+                onLoadMoreData();
+            }
+        };
+        mRecyclerView.addOnScrollListener(endlessRecyclerViewOnScrollListener);
     }
 
     private void setupSharedPreferences() {
@@ -148,9 +155,11 @@ public class GridMoviesActivity extends AppCompatActivity
 
     @Override
     public void onLoadMoreData() {
-        mProgressBar.setVisibility(View.VISIBLE);
-        if (mCurrentMoviePageNumber != 1) {
-            fetchPage();
+        if (!mode.equals("fav")) {
+            mProgressBar.setVisibility(View.VISIBLE);
+            if (mCurrentMoviePageNumber != 1) {
+                fetchPage();
+            }
         }
     }
 

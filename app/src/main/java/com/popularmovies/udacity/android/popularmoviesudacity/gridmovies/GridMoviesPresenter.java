@@ -95,34 +95,34 @@ public class GridMoviesPresenter implements MoviesContract.Presenter {
                             view.showMovie(movie);
                         }
                     });
-        } else if (order.equals("fav") & page == 1) {
+        } else if (order.equals("fav")) {
 
             if (appLocalDataStore == null) {
                 appLocalDataStore = new AppLocalDataStore(ctx);
             }
 
             subscription = appLocalDataStore.getMoviesFavorite()
-            .subscribeOn(Schedulers.newThread())
-			.observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Observer<List<MovieResults>>() {
                         @Override
-				public void onCompleted() {
-                    Log.d(LOG_TAG, "fav completed");
+                        public void onCompleted() {
+                            Log.d(LOG_TAG, "fav completed");
                             view.showComplete();
-				}
+                        }
 
-				@Override
-				public void onError(Throwable e) {
-					Log.e(LOG_TAG, e.getMessage());
-					view.showError(e.toString());
-				}
+                        @Override
+                        public void onError(Throwable e) {
+                            Log.e(LOG_TAG, e.getMessage());
+                            view.showError(e.toString());
+                        }
 
-				@Override
-                public void onNext(List<MovieResults> results) {
-                    Log.d(LOG_TAG, "fav transfer success");
-                    Movie movie = new Movie(results, results.size());
-                    view.showMovie(movie);
-                }
+                        @Override
+                        public void onNext(List<MovieResults> results) {
+                            Log.d(LOG_TAG, "fav transfer success");
+                            Movie movie = new Movie(results, results.size());
+                            view.showMovie(movie);
+                        }
                     });
 
         }
