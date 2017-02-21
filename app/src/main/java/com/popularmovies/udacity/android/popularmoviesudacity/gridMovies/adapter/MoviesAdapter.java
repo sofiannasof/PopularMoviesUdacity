@@ -10,7 +10,6 @@ import android.widget.ImageView;
 
 import com.google.gson.Gson;
 import com.popularmovies.udacity.android.popularmoviesudacity.R;
-import com.popularmovies.udacity.android.popularmoviesudacity.gridMovies.LoadListener;
 import com.popularmovies.udacity.android.popularmoviesudacity.model.MovieResults;
 import com.popularmovies.udacity.android.popularmoviesudacity.movieDetails.MovieDetailsActivity;
 import com.squareup.picasso.Picasso;
@@ -27,10 +26,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ItemViewHo
     private static final String LOG_TAG = MoviesAdapter.class.getName();
 
     List<MovieResults> mMovies;
-    private LoadListener mLoadListener;
     private Context mContext;
-    private boolean mLoading;
-    private int mLastMoviesCount = 0;
 
     public MoviesAdapter() {
         super();
@@ -39,7 +35,6 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ItemViewHo
 
     public void addData(List<MovieResults> movie) {
         mMovies.addAll(movie);
-        mLoading = false;
         notifyDataSetChanged();
     }
 
@@ -72,10 +67,6 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ItemViewHo
     @Override
     public int getItemCount() {
         return mMovies.size();
-    }
-
-    public void setOnMovieClickedListener(LoadListener loadListener) {
-        this.mLoadListener = loadListener;
     }
 
     public void startMovieDetailsActivity(MovieResults movie) {
